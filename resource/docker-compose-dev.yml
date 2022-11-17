@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-dev
+    restart: always
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./sql/data/log:/var/log/mysql
+    networks:
+      - web-edu
+networks:
+  web-edu:
