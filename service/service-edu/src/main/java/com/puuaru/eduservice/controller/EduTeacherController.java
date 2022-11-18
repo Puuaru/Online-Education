@@ -5,10 +5,7 @@ import com.puuaru.eduservice.entity.EduTeacher;
 import com.puuaru.eduservice.service.EduTeacherService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +27,11 @@ public class EduTeacherController {
     @GetMapping("/list")
     public List<EduTeacher> getTeacherList() {
         return eduTeacherService.list();
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public Object removeTeacherById(@PathVariable("id") Long id) {
+        return eduTeacherService.removeById(id);
     }
 }
 
