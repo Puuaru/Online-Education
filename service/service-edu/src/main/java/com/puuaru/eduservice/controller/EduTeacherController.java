@@ -3,6 +3,7 @@ package com.puuaru.eduservice.controller;
 
 import com.puuaru.eduservice.entity.EduTeacher;
 import com.puuaru.eduservice.service.EduTeacherService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/teacher")
+@Api(value = "teacher mangament")
 public class EduTeacherController {
     @Autowired
     EduTeacherService eduTeacherService;
