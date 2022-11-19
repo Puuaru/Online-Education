@@ -40,7 +40,7 @@ public class EduTeacherController {
      * @return
      */
     @GetMapping("/list")
-    @ApiOperation(value = "list all teachers")
+    @ApiOperation(value = "查询所有教师信息")
     public ResultCommon getList() {
         return ResultCommon.success().setData("items", eduTeacherService.list());
     }
@@ -52,7 +52,7 @@ public class EduTeacherController {
      * @return
      */
     @DeleteMapping("/remove/{id}")
-    @ApiOperation(value = "remove teacher by id")
+    @ApiOperation(value = "根据id删除教师")
     public ResultCommon removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
         return eduTeacherService.removeById(id) ? ResultCommon.success() : ResultCommon.fail();
     }
@@ -64,18 +64,19 @@ public class EduTeacherController {
      * @return
      */
     @PostMapping("/add")
-    @ApiOperation("add teacher")
+    @ApiOperation("添加教师")
     public ResultCommon add(@RequestBody EduTeacher eduTeacher) {
         return eduTeacherService.save(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
     }
 
     /**
      * 根据id修改教师数据
+     *
      * @param eduTeacher
      * @return
      */
     @PutMapping("")
-    @ApiOperation(value = "update teacher by id")
+    @ApiOperation(value = "根据id修改教师数据")
     public ResultCommon updateTeacher(@RequestBody EduTeacher eduTeacher) {
         return eduTeacherService.updateById(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
     }
@@ -88,7 +89,7 @@ public class EduTeacherController {
      * @return
      */
     @GetMapping("/page/{current}/{limit}")
-    @ApiOperation(value = "get all teachers into page")
+    @ApiOperation(value = "分页查询教师")
     public ResultCommon getPage(@PathVariable("current") long current, @PathVariable("limit") long limit) {
         Page<EduTeacher> pageTeacher = new Page<>(current, limit);
         eduTeacherService.page(pageTeacher);
@@ -105,7 +106,7 @@ public class EduTeacherController {
      * @return
      */
     @PostMapping("/page/condition/{current}/{limit}")
-    @ApiOperation(value = "get teachers according to query into page")
+    @ApiOperation(value = "根据条件分页查询教师")
     public ResultCommon getPageCondition(@PathVariable("current") long current, @PathVariable("limit") long limit, @RequestBody TeacherQuery teacherQuery) {
         Page<EduTeacher> pageTeacher = new Page<>(current, limit);
 

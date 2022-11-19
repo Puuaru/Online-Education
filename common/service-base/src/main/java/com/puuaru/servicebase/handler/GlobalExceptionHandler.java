@@ -22,6 +22,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultCommon error(Exception e) {
         e.printStackTrace();
-        return ResultCommon.fail().setMessage("Global exception occurred");
+        return ResultCommon.fail().setMessage("Global exception caught");
     }
 }
