@@ -110,7 +110,7 @@ public class WebLogAspect {
             }
             // 将RequestBody注解修饰的参数作为请求参数
             RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
-            if (requestBody != null) {
+            if (requestParam != null) {
                 Map<String, Object> map = new HashMap<>();
                 String key = parameters[i].getName();
                 if (!StringUtils.isEmpty(requestParam.value())) {
