@@ -29,10 +29,17 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/eduservice/teacher")
-@Api(value = "teacher mangament")
+@Api(value = "teacher management")
+@CrossOrigin
 public class EduTeacherController {
     @Autowired
     EduTeacherService eduTeacherService;
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取教师信息")
+    public ResultCommon getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
+        return ResultCommon.success().setData("items", eduTeacherService.getById(id));
+    }
 
     /**
      * 查询所有教师信息
@@ -51,7 +58,7 @@ public class EduTeacherController {
      * @param id
      * @return
      */
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     @ApiOperation(value = "根据id删除教师")
     public ResultCommon removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
         return eduTeacherService.removeById(id) ? ResultCommon.success() : ResultCommon.fail();
@@ -63,7 +70,7 @@ public class EduTeacherController {
      * @param eduTeacher
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("")
     @ApiOperation("添加教师")
     public ResultCommon add(@RequestBody EduTeacher eduTeacher) {
         return eduTeacherService.save(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
@@ -107,7 +114,8 @@ public class EduTeacherController {
      */
     @PostMapping("/page/condition/{current}/{limit}")
     @ApiOperation(value = "根据条件分页查询教师")
-    public ResultCommon getPageCondition(@PathVariable("current") long current, @PathVariable("limit") long limit, @RequestBody TeacherQuery teacherQuery) {
+    @CrossOrigin
+    public ResultCommon getPageCondition(@PathVariable("current") long current, @PathVariable("limit") long limit, @RequestBody(required = false) TeacherQuery teacherQuery) {
         Page<EduTeacher> pageTeacher = new Page<>(current, limit);
 
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();

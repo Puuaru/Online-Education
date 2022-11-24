@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class EduTeacher implements Serializable {
 
     @ApiModelProperty(value = "讲师ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)    // 解决json序列化时雪花算法生成的id精度不足问题
     private Long id;
 
     @ApiModelProperty(value = "讲师姓名")
