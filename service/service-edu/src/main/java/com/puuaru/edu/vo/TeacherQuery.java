@@ -1,4 +1,4 @@
-package com.puuaru.eduservice.vo;
+package com.puuaru.edu.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

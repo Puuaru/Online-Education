@@ -1,4 +1,4 @@
-package com.puuaru.eduservice.controller;
+package com.puuaru.edu.controller;
 
 import com.puuaru.utils.ResultCommon;
 import org.springframework.web.bind.annotation.*;

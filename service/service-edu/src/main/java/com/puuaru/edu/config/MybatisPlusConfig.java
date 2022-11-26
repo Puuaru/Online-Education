@@ -1,4 +1,4 @@
-package com.puuaru.eduservice.config;
+package com.puuaru.edu.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

@@ -1,11 +1,11 @@
-package com.puuaru.eduservice.controller;
+package com.puuaru.edu.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.puuaru.eduservice.entity.EduTeacher;
-import com.puuaru.eduservice.service.EduTeacherService;
-import com.puuaru.eduservice.vo.TeacherQuery;
+import com.puuaru.edu.entity.EduTeacher;
+import com.puuaru.edu.service.EduTeacherService;
+import com.puuaru.edu.vo.TeacherQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

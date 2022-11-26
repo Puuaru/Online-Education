@@ -1,4 +1,4 @@
-package com.puuaru.eduservice;
+package com.puuaru.edu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

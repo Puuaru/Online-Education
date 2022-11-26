@@ -1,6 +1,6 @@
-package com.puuaru.eduservice.mapper;
+package com.puuaru.edu.mapper;
 
-import com.puuaru.eduservice.entity.EduTeacher;
+import com.puuaru.edu.entity.EduTeacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

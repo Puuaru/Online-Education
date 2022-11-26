@@ -1,4 +1,4 @@
-package com.puuaru.eduservice.entity;
+package com.puuaru.edu.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
@@ -62,6 +62,5 @@ public class EduTeacher implements Serializable {
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
-
 
 }
