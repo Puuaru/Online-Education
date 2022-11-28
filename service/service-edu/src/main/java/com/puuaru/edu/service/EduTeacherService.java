@@ -1,6 +1,6 @@
-package com.puuaru.eduservice.service;
+package com.puuaru.edu.service;
 
-import com.puuaru.eduservice.entity.EduTeacher;
+import com.puuaru.edu.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

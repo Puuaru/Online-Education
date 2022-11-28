@@ -1,8 +1,8 @@
-package com.puuaru.eduservice.service.impl;
+package com.puuaru.edu.service.impl;
 
-import com.puuaru.eduservice.entity.EduTeacher;
-import com.puuaru.eduservice.mapper.EduTeacherMapper;
-import com.puuaru.eduservice.service.EduTeacherService;
+import com.puuaru.edu.entity.EduTeacher;
+import com.puuaru.edu.mapper.EduTeacherMapper;
+import com.puuaru.edu.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

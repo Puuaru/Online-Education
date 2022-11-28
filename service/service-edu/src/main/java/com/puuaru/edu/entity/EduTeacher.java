@@ -1,11 +1,13 @@
-package com.puuaru.eduservice.entity;
+package com.puuaru.edu.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class EduTeacher implements Serializable {
 
     @ApiModelProperty(value = "讲师ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)    // 解决json序列化时雪花算法生成的id精度不足问题
     private Long id;
 
     @ApiModelProperty(value = "讲师姓名")
@@ -53,10 +56,11 @@ public class EduTeacher implements Serializable {
     private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
-
 
 }
