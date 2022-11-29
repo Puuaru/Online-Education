@@ -28,7 +28,7 @@ import java.util.Map;
  * @since 2022-11-17
  */
 @RestController
-@RequestMapping("/eduservice/teacher")
+@RequestMapping("/edu/teacher")
 @Api(value = "teacher management")
 @CrossOrigin
 public class EduTeacherController {
