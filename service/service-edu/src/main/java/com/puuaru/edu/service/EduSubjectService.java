@@ -2,7 +2,7 @@ package com.puuaru.edu.service;
 
 import com.puuaru.edu.entity.EduSubject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.puuaru.edu.entity.vo.SubjectVO;
+import com.puuaru.edu.vo.SubjectVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

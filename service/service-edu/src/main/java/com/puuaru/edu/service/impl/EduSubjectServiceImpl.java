@@ -3,7 +3,7 @@ package com.puuaru.edu.service.impl;
 import com.alibaba.excel.EasyExcel;
 import com.puuaru.edu.entity.EduSubject;
 import com.puuaru.edu.entity.excel.ExcelSubjectData;
-import com.puuaru.edu.entity.vo.SubjectVO;
+import com.puuaru.edu.vo.SubjectVO;
 import com.puuaru.edu.listener.SubjectExcelListener;
 import com.puuaru.edu.mapper.EduSubjectMapper;
 import com.puuaru.edu.service.EduSubjectService;

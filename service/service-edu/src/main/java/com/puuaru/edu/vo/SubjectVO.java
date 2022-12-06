@@ -1,4 +1,4 @@
-package com.puuaru.edu.entity.vo;
+package com.puuaru.edu.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
