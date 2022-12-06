@@ -1,10 +1,12 @@
 package com.puuaru.edu.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.puuaru.edu.service.EduCourseService;
+import com.puuaru.edu.vo.CourseInfo;
+import com.puuaru.utils.ResultCommon;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,8 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/edu/course")
+@Api("课程信息管理")
 @CrossOrigin
 public class EduCourseController {
+
+    @Autowired
+    EduCourseService courseService;
+
+    /**
+     * 添加课程基本信息
+     * @param courseInfo
+     * @return
+     */
+    @PostMapping("/addCourseInfo")
+    public ResultCommon addCourseInfo(@RequestBody CourseInfo courseInfo) {
+        courseService.saveCourseInfo(courseInfo);
+        return ResultCommon.success();
+    }
 
 }
 

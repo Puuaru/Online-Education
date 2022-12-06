@@ -2,6 +2,7 @@ package com.puuaru.edu.service;
 
 import com.puuaru.edu.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.puuaru.edu.vo.CourseInfo;
 
 /**
  * <p>
@@ -13,4 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduCourseService extends IService<EduCourse> {
 
+    /**
+     * 根据课程信息VO类添加课程信息
+     * @param courseInfo
+     */
+    void saveCourseInfo(CourseInfo courseInfo);
 }
