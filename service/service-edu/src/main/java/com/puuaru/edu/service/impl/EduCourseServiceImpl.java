@@ -38,8 +38,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new RuntimeException("添加课程信息失败");
         }
 
+        Long courseId = addingCourse.getId();
         EduCourseDescription courseDescription = new EduCourseDescription();
         courseDescription.setDescription(courseInfo.getDescription());
+        courseDescription.setId(courseId);
         result = courseDescriptionService.save(courseDescription);
         if (!result) {
             throw new RuntimeException("添加课程简介失败");
