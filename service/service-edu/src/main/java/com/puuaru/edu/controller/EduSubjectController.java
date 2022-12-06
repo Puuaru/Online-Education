@@ -37,8 +37,7 @@ public class EduSubjectController {
     @GetMapping("")
     @ApiOperation("递归获取课程分类信息")
     public ResultCommon getSubject() {
-        // TODO
-        return null;
+        return ResultCommon.success().setData("items", eduSubjectService.getSubjectTree());
     }
 }
 
