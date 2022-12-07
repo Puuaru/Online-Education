@@ -46,5 +46,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if (!result) {
             throw new RuntimeException("添加课程简介失败");
         }
+        // 存储id提供给前端
+        courseInfo.setId(addingCourse.getId());
     }
 }
