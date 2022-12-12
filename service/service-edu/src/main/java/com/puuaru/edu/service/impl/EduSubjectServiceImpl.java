@@ -53,7 +53,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
      */
     private List<SubjectVO> getChildrenList(SubjectVO root, List<EduSubject> subjectList) {
         List<SubjectVO> result = subjectList.stream()
-                .filter(item -> item.getParentId().equals(root.getId()))    // 找出与父节点相同的节点
+                .filter(item -> item.getParentId().equals(root.getId()))    // 找出父节点对应的子节点
                 .map(item -> new SubjectVO(item.getId(), item.getTitle(), null))    // 每个 EduSubject 转换为 VO 类
                 .peek(item -> item.setChildren(getChildrenList(item, subjectList))) // 找出子分类
                 .collect(Collectors.toList());

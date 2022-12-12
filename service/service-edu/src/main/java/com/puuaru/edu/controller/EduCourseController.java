@@ -32,8 +32,8 @@ public class EduCourseController {
      */
     @PostMapping("")
     public ResultCommon addCourseInfo(@RequestBody CourseInfo courseInfo) {
-        courseService.saveCourseInfo(courseInfo);
-        return ResultCommon.success().setData("id", courseInfo.getId().toString());
+        String id = courseService.saveCourseInfo(courseInfo);
+        return ResultCommon.success().setData("id", id);
     }
 
 }

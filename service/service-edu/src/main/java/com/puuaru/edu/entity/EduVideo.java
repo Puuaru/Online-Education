@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 课程视频
+ * 课程视频，
  * </p>
  *
  * @author puuaru

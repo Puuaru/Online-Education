@@ -1,10 +1,18 @@
 package com.puuaru.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.edu.entity.EduChapter;
+import com.puuaru.edu.entity.EduVideo;
 import com.puuaru.edu.mapper.EduChapterMapper;
 import com.puuaru.edu.service.EduChapterService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.puuaru.edu.service.EduVideoService;
+import com.puuaru.edu.vo.ChapterVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -17,4 +25,54 @@ import org.springframework.stereotype.Service;
 @Service
 public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChapter> implements EduChapterService {
 
+    @Autowired
+    EduVideoService videoService;
+
+    @Override
+    public List<ChapterVO> getCourseDetails(Long courseId) {
+        // 查出对应课程的所有chapter
+        QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId);
+        List<EduChapter> chapters = super.list(wrapper);
+        List<EduVideo> videos = videoService.list();
+
+        return chapters.stream()
+                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
+                .peek(item -> {
+                    QueryWrapper<EduVideo> videoWrapper = getChildrenWrapper(item);
+                    item.setChildren(getVideoList(videoService.list(videoWrapper)));
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取查询子节点的wrapper，在chapterService中，视Chapter实体类和Video实体类的chapterId字段为父节点字段
+     * 从而保证可能在Video中进行更多的细分
+     *
+     * @param item
+     * @return
+     */
+    private QueryWrapper<EduVideo> getChildrenWrapper(ChapterVO item) {
+        QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
+        videoWrapper.eq("chapter_id", item.getId());
+        return videoWrapper;
+    }
+
+    /**
+     * 递归查找作为子节点的视频列表
+     *
+     * @param videos
+     * @return
+     */
+    private List<ChapterVO> getVideoList(List<EduVideo> videos) {
+        return videos.stream()
+                // 将Video实体类转换为ChapterVO类时会存放关于Video的更多信息
+                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
+                .peek(item -> {
+                    // 查询每个视频是否有分p
+                    QueryWrapper<EduVideo> videoWrapper = getChildrenWrapper(item);
+                    item.setChildren(getVideoList(videoService.list(videoWrapper)));
+                })
+                .collect(Collectors.toList());
+    }
 }

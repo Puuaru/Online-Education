@@ -1,9 +1,10 @@
 package com.puuaru.edu.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.puuaru.edu.service.EduChapterService;
+import com.puuaru.utils.ResultCommon;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -15,7 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/edu/chapter")
+@CrossOrigin
 public class EduChapterController {
 
+    @Autowired
+    EduChapterService chapterService;
+
+    @GetMapping("/details/{id}")
+    public ResultCommon getCourseDetails(@PathVariable("id") Long courseId) {
+        return ResultCommon.success().setData("items", chapterService.getCourseDetails(courseId));
+    }
 }
 

@@ -27,10 +27,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     /**
      * 根据课程信息VO类添加课程信息
+     *
      * @param courseInfo
+     * @return
      */
     @Override
-    public void saveCourseInfo(CourseInfo courseInfo) {
+    public String saveCourseInfo(CourseInfo courseInfo) {
         EduCourse addingCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfo, addingCourse);
         boolean result = this.save(addingCourse);
@@ -47,6 +49,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new RuntimeException("添加课程简介失败");
         }
         // 存储id提供给前端
-        courseInfo.setId(addingCourse.getId());
+        return addingCourse.getId().toString();
     }
 }

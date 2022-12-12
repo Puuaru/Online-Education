@@ -2,6 +2,9 @@ package com.puuaru.edu.service;
 
 import com.puuaru.edu.entity.EduChapter;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.puuaru.edu.vo.ChapterVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduChapterService extends IService<EduChapter> {
 
+    List<ChapterVO> getCourseDetails(Long courseId);
 }
