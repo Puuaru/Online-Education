@@ -21,4 +21,8 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return
      */
     String saveCourseInfo(CourseInfo courseInfo);
+
+    CourseInfo getCourseInfo(Long id);
+
+    void updateCourseInfo(CourseInfo courseInfo);
 }

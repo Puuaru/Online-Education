@@ -32,9 +32,18 @@ public class EduCourseController {
      */
     @PostMapping("")
     public ResultCommon addCourseInfo(@RequestBody CourseInfo courseInfo) {
-        String id = courseService.saveCourseInfo(courseInfo);
-        return ResultCommon.success().setData("id", id);
+        return ResultCommon.success().setData("id", courseService.saveCourseInfo(courseInfo));
     }
 
+    @GetMapping("/{id}")
+    public ResultCommon getCourseInfo(@PathVariable("id") Long id) {
+        return ResultCommon.success().setData("items", courseService.getCourseInfo(id));
+    }
+
+    @PutMapping("")
+    public ResultCommon updateCourseInfo(@RequestBody CourseInfo courseInfo) {
+        courseService.updateCourseInfo(courseInfo);
+        return ResultCommon.success().setData("items", courseInfo);
+    }
 }
 
