@@ -10,6 +10,7 @@ import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -38,7 +39,8 @@ public class EduTeacherController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取教师信息")
     public ResultCommon getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
-        return ResultCommon.success().setData("items", eduTeacherService.getById(id));
+        EduTeacher teacher = eduTeacherService.getById(id);
+        return ResultCommon.success().setData("items", teacher);
     }
 
     /**
@@ -49,7 +51,8 @@ public class EduTeacherController {
     @GetMapping("/list")
     @ApiOperation(value = "查询所有教师信息")
     public ResultCommon getList() {
-        return ResultCommon.success().setData("items", eduTeacherService.list());
+        List<EduTeacher> list = eduTeacherService.list();
+        return ResultCommon.success().setData("items", list);
     }
 
     /**

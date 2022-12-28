@@ -5,6 +5,8 @@ import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.CourseInfo;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,19 +33,33 @@ public class EduCourseController {
      * @return
      */
     @PostMapping("")
+    @ApiOperation("添加课程基本信息")
     public ResultCommon addCourseInfo(@RequestBody CourseInfo courseInfo) {
-        return ResultCommon.success().setData("id", courseService.saveCourseInfo(courseInfo));
+        String courseId = courseService.saveCourseInfo(courseInfo);
+        return ResultCommon.success().setData("id", courseId);
     }
 
+    /**
+     * 根据课程id查询课程信息
+     * @param id 课程id
+     * @return
+     */
     @GetMapping("/{id}")
+    @ApiOperation("根据课程id查询课程信息")
     public ResultCommon getCourseInfo(@PathVariable("id") Long id) {
-        return ResultCommon.success().setData("items", courseService.getCourseInfo(id));
+        CourseInfo courseInfo = courseService.getCourseInfo(id);
+        return ResultCommon.success().setData("items", courseInfo);
     }
 
+    /**
+     * 更新课程信息，通过课程信息对象中的id指定课程
+     * @param courseInfo 课程信息对象
+     * @return
+     */
     @PutMapping("")
+    @ApiOperation("更新课程信息")
     public ResultCommon updateCourseInfo(@RequestBody CourseInfo courseInfo) {
         courseService.updateCourseInfo(courseInfo);
         return ResultCommon.success().setData("items", courseInfo);
     }
 }
-
