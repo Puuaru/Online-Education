@@ -28,9 +28,31 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Autowired
     EduVideoService videoService;
 
+    /**
+     * 将连同小节信息的整个章节信息删除
+     * @param chapterId
+     */
+    @Override
+    public void deleteById(Long chapterId) {
+        // wrapper to find videos with chapterId
+        // delete videos' records with wrapper
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id", chapterId);
+        videoService.remove(wrapper);
+
+        // (?) delete videos from remote server
+
+        // delete chapter by chapterId
+        super.removeById(chapterId);
+    }
+
+    /**
+     * 获取课程对应的所有章节和各章节对应的小节
+     * @param courseId
+     * @return
+     */
     @Override
     public List<ChapterVO> getCourseDetails(Long courseId) {
-        // 查出对应课程的所有chapter
         QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);
         List<EduChapter> chapters = super.list(wrapper);
@@ -59,7 +81,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     }
 
     /**
-     * 递归查找作为子节点的视频列表
+     * 递归查找作为子节点的视频（小节）列表
      *
      * @param videos
      * @return

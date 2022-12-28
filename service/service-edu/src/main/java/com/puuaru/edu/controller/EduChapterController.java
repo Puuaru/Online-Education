@@ -40,9 +40,52 @@ public class EduChapterController {
         return ResultCommon.success().setData("items", courseDetails);
     }
 
+    /**
+     * 根据章节id获取章节信息
+     * @param chapterId
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据章节id获取章节信息")
     public ResultCommon getChapterById(@PathVariable("id") Long chapterId) {
         EduChapter chapter = chapterService.getById(chapterId);
         return ResultCommon.success().setData("items", chapter);
+    }
+
+    /**
+     * 新增章节信息
+     * @param chapter
+     * @return
+     */
+    @PostMapping("")
+    @ApiOperation("新增章节信息")
+    public ResultCommon saveChapter(@RequestBody EduChapter chapter) {
+        chapterService.save(chapter);
+        return ResultCommon.success();
+    }
+
+    /**
+     * 更新章节信息
+     * @param chapter
+     * @return
+     */
+    @PutMapping("/{id}")
+    @ApiOperation("更新章节信息")
+    public ResultCommon updateChapterById(@RequestBody EduChapter chapter) {
+        chapterService.updateById(chapter);
+        return ResultCommon.success().setData("items", chapter);
+    }
+
+    /**
+     * 根据章节id删除章节及其小节信息
+     * @param chapterId
+     * @return
+     */
+    @DeleteMapping("")
+    @ApiOperation("根据章节id删除章节及其小节信息")
+    public ResultCommon deleteChapterById(@PathVariable Long chapterId) {
+        chapterService.deleteById(chapterId);
+        return ResultCommon.success();
     }
 }
 
