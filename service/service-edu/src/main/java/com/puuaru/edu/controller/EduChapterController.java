@@ -69,7 +69,7 @@ public class EduChapterController {
      * @param chapter
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("")
     @ApiOperation("更新章节信息")
     public ResultCommon updateChapterById(@RequestBody EduChapter chapter) {
         chapterService.updateById(chapter);
@@ -81,9 +81,9 @@ public class EduChapterController {
      * @param chapterId
      * @return
      */
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     @ApiOperation("根据章节id删除章节及其小节信息")
-    public ResultCommon deleteChapterById(@PathVariable Long chapterId) {
+    public ResultCommon deleteChapterById(@PathVariable("id") Long chapterId) {
         chapterService.deleteById(chapterId);
         return ResultCommon.success();
     }

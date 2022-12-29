@@ -56,7 +56,6 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);
         List<EduChapter> chapters = super.list(wrapper);
-        List<EduVideo> videos = videoService.list();
 
         return chapters.stream()
                 .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
