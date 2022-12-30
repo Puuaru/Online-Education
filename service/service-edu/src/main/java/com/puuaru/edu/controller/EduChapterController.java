@@ -30,7 +30,7 @@ public class EduChapterController {
 
     /**
      * 根据课程id获取某课程的章节和视频（小节）数据，作用上类似 getList
-     * @param courseId
+     * @param courseId 章节id
      * @return
      */
     @GetMapping("/details/{id}")
@@ -42,7 +42,7 @@ public class EduChapterController {
 
     /**
      * 根据章节id获取章节信息
-     * @param chapterId
+     * @param chapterId 章节id
      * @return
      */
     @GetMapping("/{id}")
@@ -54,7 +54,7 @@ public class EduChapterController {
 
     /**
      * 新增章节信息
-     * @param chapter
+     * @param chapter 章节信息
      * @return
      */
     @PostMapping("")
@@ -66,7 +66,7 @@ public class EduChapterController {
 
     /**
      * 更新章节信息
-     * @param chapter
+     * @param chapter 章节信息
      * @return
      */
     @PutMapping("")
@@ -78,7 +78,7 @@ public class EduChapterController {
 
     /**
      * 根据章节id删除章节及其小节信息
-     * @param chapterId
+     * @param chapterId 章节id
      * @return
      */
     @DeleteMapping("/{id}")

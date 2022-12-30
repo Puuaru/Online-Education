@@ -3,6 +3,7 @@ package com.puuaru.edu.service;
 import com.puuaru.edu.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puuaru.edu.vo.CourseInfo;
+import com.puuaru.edu.vo.CoursePublishInfo;
 
 /**
  * <p>
@@ -25,4 +26,6 @@ public interface EduCourseService extends IService<EduCourse> {
     CourseInfo getCourseInfo(Long id);
 
     void updateCourseInfo(CourseInfo courseInfo);
+
+    CoursePublishInfo getCoursePublishInfo(Long id);
 }

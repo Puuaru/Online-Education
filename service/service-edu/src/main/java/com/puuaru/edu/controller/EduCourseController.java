@@ -3,6 +3,7 @@ package com.puuaru.edu.controller;
 
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.CourseInfo;
+import com.puuaru.edu.vo.CoursePublishInfo;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +30,7 @@ public class EduCourseController {
 
     /**
      * 添加课程基本信息
-     * @param courseInfo
+     * @param courseInfo 课程基本信息
      * @return
      */
     @PostMapping("")
@@ -61,5 +62,17 @@ public class EduCourseController {
     public ResultCommon updateCourseInfo(@RequestBody CourseInfo courseInfo) {
         courseService.updateCourseInfo(courseInfo);
         return ResultCommon.success().setData("items", courseInfo);
+    }
+
+    /**
+     * 发布课程时的回显信息
+     * @param id 课程id
+     * @return
+     */
+    @GetMapping("/publish/{id}")
+    @ApiOperation("发布课程时的回显信息")
+    public ResultCommon getPublishInfo(@PathVariable Long id) {
+        CoursePublishInfo coursePublishInfo = courseService.getCoursePublishInfo(id);
+        return ResultCommon.success().setData("items", coursePublishInfo);
     }
 }
