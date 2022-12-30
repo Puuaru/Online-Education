@@ -11,6 +11,7 @@ import com.puuaru.edu.vo.ChapterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +35,6 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
      */
     @Override
     public void deleteById(Long chapterId) {
-        // wrapper to find videos with chapterId
-        // delete videos' records with wrapper
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id", chapterId);
         videoService.remove(wrapper);
@@ -56,27 +55,32 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);
         List<EduChapter> chapters = super.list(wrapper);
+        // 根据sort字段进行排序
+        chapters.sort(Comparator.comparing(EduChapter::getSort));
 
         return chapters.stream()
                 .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
                 .peek(item -> {
-                    QueryWrapper<EduVideo> videoWrapper = getChildrenWrapper(item);
-                    item.setChildren(getVideoList(videoService.list(videoWrapper)));
+                    List<EduVideo> videoList = getChildVideoList(item);
+                    item.setChildren(getVideoList(videoList));
                 })
                 .collect(Collectors.toList());
     }
 
     /**
-     * 获取查询子节点的wrapper，在chapterService中，视Chapter实体类和Video实体类的chapterId字段为父节点字段
+     * 获取查询子节点列表并进行排序，在chapterService中，视Chapter实体类和Video实体类的chapterId字段为父节点字段
      * 从而保证可能在Video中进行更多的细分
      *
      * @param item
      * @return
      */
-    private QueryWrapper<EduVideo> getChildrenWrapper(ChapterVO item) {
+    private List<EduVideo> getChildVideoList(ChapterVO item) {
         QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
         videoWrapper.eq("chapter_id", item.getId());
-        return videoWrapper;
+        List<EduVideo> videoList = videoService.list(videoWrapper);
+        // 根据sort字段进行排序
+        videoList.sort(Comparator.comparing(EduVideo::getSort));
+        return videoList;
     }
 
     /**
@@ -91,8 +95,8 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                 .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
                 .peek(item -> {
                     // 查询每个视频是否有分p
-                    QueryWrapper<EduVideo> videoWrapper = getChildrenWrapper(item);
-                    item.setChildren(getVideoList(videoService.list(videoWrapper)));
+                    List<EduVideo> subVideoList = getChildVideoList(item);
+                    item.setChildren(getVideoList(subVideoList));
                 })
                 .collect(Collectors.toList());
     }
