@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.puuaru.edu.mapper.EduCourseDescriptionMapper">
+
+    <resultMap id="CourseDescriptionWithBLOBS" type="com.puuaru.edu.entity.EduCourseDescription">
+        <result column="id" property="id"/>
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
+    <select id="selectByIdWithBLOBS" resultMap="CourseDescriptionWithBLOBS" parameterType="long">
+        select * from edu_course_description where id = #{id}
+    </select>
+</mapper>

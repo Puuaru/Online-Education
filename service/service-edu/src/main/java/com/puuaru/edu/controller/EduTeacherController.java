@@ -28,7 +28,7 @@ import java.util.Map;
  * @since 2022-11-17
  */
 @RestController
-@RequestMapping("/eduservice/teacher")
+@RequestMapping("/edu/teacher")
 @Api(value = "teacher management")
 @CrossOrigin
 public class EduTeacherController {
@@ -38,7 +38,8 @@ public class EduTeacherController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取教师信息")
     public ResultCommon getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
-        return ResultCommon.success().setData("items", eduTeacherService.getById(id));
+        EduTeacher teacher = eduTeacherService.getById(id);
+        return ResultCommon.success().setData("items", teacher);
     }
 
     /**
@@ -49,7 +50,8 @@ public class EduTeacherController {
     @GetMapping("/list")
     @ApiOperation(value = "查询所有教师信息")
     public ResultCommon getList() {
-        return ResultCommon.success().setData("items", eduTeacherService.list());
+        List<EduTeacher> list = eduTeacherService.list();
+        return ResultCommon.success().setData("items", list);
     }
 
     /**

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2022/11/24
  */
 @RestController
-@RequestMapping("/eduservice/user")
+@RequestMapping("/edu/user")
 @CrossOrigin    // 暂时解决跨域
 public class EduLoginController {
     @PostMapping("login")

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @Description: TheMetaObjectHandler
+ * @Description: TheMetaObjectHandler，自动处理数据的创建及更新时间
  * @Author: puuaru
  * @Date: 2022/11/18
  */
