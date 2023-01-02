@@ -32,9 +32,9 @@ public class EduVideoController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据小节id获取小节信息")
-    public ResultCommon getVideoById(@PathVariable Long id) {
+    public EduVideo getVideoById(@PathVariable Long id) {
         EduVideo video = videoService.getById(id);
-        return ResultCommon.success().setData("items", video);
+        return video;
     }
 
     /**
@@ -56,9 +56,9 @@ public class EduVideoController {
      */
     @PutMapping("")
     @ApiOperation("根据小节id更新小节信息")
-    public ResultCommon updateVideo(@RequestBody EduVideo video) {
+    public EduVideo updateVideo(@RequestBody EduVideo video) {
         videoService.updateById(video);
-        return ResultCommon.success().setData("items", video);
+        return video;
     }
 
     /**

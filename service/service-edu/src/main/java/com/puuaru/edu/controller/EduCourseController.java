@@ -47,9 +47,9 @@ public class EduCourseController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据课程id查询课程信息")
-    public ResultCommon getCourseInfo(@PathVariable("id") Long id) {
+    public CourseInfo getCourseInfo(@PathVariable("id") Long id) {
         CourseInfo courseInfo = courseService.getCourseInfo(id);
-        return ResultCommon.success().setData("items", courseInfo);
+        return courseInfo;
     }
 
     /**
@@ -59,9 +59,21 @@ public class EduCourseController {
      */
     @PutMapping("")
     @ApiOperation("更新课程信息")
-    public ResultCommon updateCourseInfo(@RequestBody CourseInfo courseInfo) {
+    public CourseInfo updateCourseInfo(@RequestBody CourseInfo courseInfo) {
         courseService.updateCourseInfo(courseInfo);
-        return ResultCommon.success().setData("items", courseInfo);
+        return courseInfo;
+    }
+
+    /**
+     * 发布课程时的回显信息
+     * @param id 课程id
+     * @return
+     */
+    @GetMapping("/publish/{id}")
+    @ApiOperation("发布课程时的回显信息")
+    public CoursePublishInfo getPublishInfo(@PathVariable Long id) {
+        CoursePublishInfo coursePublishInfo = courseService.getCoursePublishInfo(id);
+        return coursePublishInfo;
     }
 
     /**

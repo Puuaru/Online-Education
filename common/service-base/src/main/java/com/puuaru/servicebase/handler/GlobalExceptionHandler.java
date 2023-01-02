@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
 
     /**
-     * 全局异常处理器，当异常发生时返回一个共通的响应体
+     * 通用异常处理器
      * @param e
      * @return 作为响应体的结果封装类
      */

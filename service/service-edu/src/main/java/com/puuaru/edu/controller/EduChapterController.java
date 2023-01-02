@@ -35,9 +35,9 @@ public class EduChapterController {
      */
     @GetMapping("/details/{id}")
     @ApiOperation("根据课程id获取某课程的章节和视频（小节）数据")
-    public ResultCommon getCourseDetails(@PathVariable("id") Long courseId) {
+    public List<ChapterVO> getCourseDetails(@PathVariable("id") Long courseId) {
         List<ChapterVO> courseDetails = chapterService.getCourseDetails(courseId);
-        return ResultCommon.success().setData("items", courseDetails);
+        return courseDetails;
     }
 
     /**
@@ -47,9 +47,9 @@ public class EduChapterController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据章节id获取章节信息")
-    public ResultCommon getChapterById(@PathVariable("id") Long chapterId) {
+    public EduChapter getChapterById(@PathVariable("id") Long chapterId) {
         EduChapter chapter = chapterService.getById(chapterId);
-        return ResultCommon.success().setData("items", chapter);
+        return chapter;
     }
 
     /**
@@ -71,9 +71,9 @@ public class EduChapterController {
      */
     @PutMapping("")
     @ApiOperation("更新章节信息")
-    public ResultCommon updateChapterById(@RequestBody EduChapter chapter) {
+    public EduChapter updateChapterById(@RequestBody EduChapter chapter) {
         chapterService.updateById(chapter);
-        return ResultCommon.success().setData("items", chapter);
+        return chapter;
     }
 
     /**

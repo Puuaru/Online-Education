@@ -37,9 +37,9 @@ public class EduTeacherController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取教师信息")
-    public ResultCommon getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
+    public EduTeacher getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
         EduTeacher teacher = eduTeacherService.getById(id);
-        return ResultCommon.success().setData("items", teacher);
+        return teacher;
     }
 
     /**
@@ -49,9 +49,9 @@ public class EduTeacherController {
      */
     @GetMapping("/list")
     @ApiOperation(value = "查询所有教师信息")
-    public ResultCommon getList() {
+    public List<EduTeacher> getList() {
         List<EduTeacher> list = eduTeacherService.list();
-        return ResultCommon.success().setData("items", list);
+        return list;
     }
 
     /**
