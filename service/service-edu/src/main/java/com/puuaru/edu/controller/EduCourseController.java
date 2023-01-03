@@ -4,11 +4,15 @@ package com.puuaru.edu.controller;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.CourseInfo;
 import com.puuaru.edu.vo.CoursePublishInfo;
+import com.puuaru.edu.vo.CourseQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -79,5 +83,36 @@ public class EduCourseController {
         return coursePublishInfo;
     }
 
+    /**
+     * 修改课程状态，正式发布课程
+     * @param id
+     * @return
+     */
+    @PutMapping("/publish/{id}")
+    @ApiOperation("修改课程状态，正式发布课程")
+    public Boolean publishCourse(@PathVariable Long id) {
+        Boolean result = courseService.publishCourse(id);
+        return result;
+    }
 
+    /**
+     * 条件分页查询课程
+     * @param current
+     * @param limit
+     * @param courseQuery
+     * @return
+     */
+    @PostMapping("/condition/{current}/{limit}")
+    @ApiOperation("条件分页查询课程")
+    public ResultCommon getCoursePage(@PathVariable long current, @PathVariable long limit, @RequestBody CourseQuery courseQuery) {
+        Map<String, Object> result = courseService.getPage(current, limit, courseQuery);
+        return ResultCommon.success().setData(result);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation("根据id删除课程及其章节小节")
+    public Boolean deleteCourse(@PathVariable Long id) {
+        Boolean result = courseService.removeCourseById(id);
+        return result;
+    }
 }

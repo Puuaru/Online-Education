@@ -48,18 +48,13 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
      */
     @Override
     public Boolean deleteById(Long chapterId) {
-        Boolean result = false;
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id", chapterId);
-        //Boolean tempResult = videoService.remove(wrapper);
-        int videoBefore = videoMapper.selectCount(wrapper);
-        int videoDeleted = videoMapper.delete(wrapper);
+        videoMapper.delete(wrapper);
         // (?) delete videos from remote server
 
-        Boolean chapterDeleted = super.removeById(chapterId);
-        if ((videoBefore == videoDeleted) && chapterDeleted)
-            result = true;
-
+        // 考虑到查询小节条目数带来的性能损失，删除的成功与否以chapter删除的结果为依据
+        Boolean result = super.removeById(chapterId);
         return result;
     }
 
