@@ -10,6 +10,7 @@ import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -104,10 +105,8 @@ public class EduTeacherController {
     @GetMapping("/page/{current}/{limit}")
     @ApiOperation(value = "分页查询教师")
     public ResultCommon getPage(@PathVariable("current") long current, @PathVariable("limit") long limit) {
-        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
-        eduTeacherService.page(pageTeacher);
-
-        return getPageResultCommon(pageTeacher);
+        Map<String, Object> result = eduTeacherService.getPage(current, limit, null);
+        return ResultCommon.success().setData(result);
     }
 
     /**
@@ -120,39 +119,9 @@ public class EduTeacherController {
      */
     @PostMapping("/page/condition/{current}/{limit}")
     @ApiOperation(value = "根据条件分页查询教师")
-    @CrossOrigin
     public ResultCommon getPageCondition(@PathVariable("current") long current, @PathVariable("limit") long limit, @RequestBody(required = false) TeacherQuery teacherQuery) {
-        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
-
-        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
-        String name = teacherQuery.getName();
-        Integer level = teacherQuery.getLevel();
-        String begin = teacherQuery.getBegin();
-        String end = teacherQuery.getEnd();
-        if (StringUtils.hasText(name)) {
-            wrapper.like("name", name);
-        }
-        if (!ObjectUtils.isEmpty(level)) {
-            wrapper.eq("level", level);
-        }
-        if (StringUtils.hasText(begin)) {
-            wrapper.gt("gmt_create", begin);
-        }
-        if (StringUtils.hasText(end)) {
-            wrapper.le("gmt_modified", end);
-        }
-
-        eduTeacherService.page(pageTeacher, wrapper);
-        return getPageResultCommon(pageTeacher);
-    }
-
-    private ResultCommon getPageResultCommon(Page<EduTeacher> pageTeacher) {
-        long total = pageTeacher.getTotal();
-        List<EduTeacher> records = pageTeacher.getRecords();
-        Map<String, Object> map = new HashMap<>();
-        map.put("total", total);
-        map.put("items", records);
-        return ResultCommon.success().setData(map);
+        Map<String, Object> result = eduTeacherService.getPage(current, limit, teacherQuery);
+        return ResultCommon.success().setData(result);
     }
 }
 
