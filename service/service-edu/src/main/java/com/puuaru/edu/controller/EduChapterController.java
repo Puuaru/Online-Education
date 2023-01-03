@@ -25,8 +25,12 @@ import java.util.List;
 @CrossOrigin
 public class EduChapterController {
 
+    private final EduChapterService chapterService;
+
     @Autowired
-    EduChapterService chapterService;
+    public EduChapterController(EduChapterService chapterService) {
+        this.chapterService = chapterService;
+    }
 
     /**
      * 根据课程id获取某课程的章节和视频（小节）数据，作用上类似 getList
@@ -59,9 +63,9 @@ public class EduChapterController {
      */
     @PostMapping("")
     @ApiOperation("新增章节信息")
-    public ResultCommon saveChapter(@RequestBody EduChapter chapter) {
-        chapterService.save(chapter);
-        return ResultCommon.success();
+    public Boolean saveChapter(@RequestBody EduChapter chapter) {
+        Boolean result = chapterService.save(chapter);
+        return result;
     }
 
     /**
@@ -71,9 +75,9 @@ public class EduChapterController {
      */
     @PutMapping("")
     @ApiOperation("更新章节信息")
-    public EduChapter updateChapterById(@RequestBody EduChapter chapter) {
-        chapterService.updateById(chapter);
-        return chapter;
+    public Boolean updateChapterById(@RequestBody EduChapter chapter) {
+        Boolean result = chapterService.updateById(chapter);
+        return result;
     }
 
     /**
@@ -83,9 +87,9 @@ public class EduChapterController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation("根据章节id删除章节及其小节信息")
-    public ResultCommon deleteChapterById(@PathVariable("id") Long chapterId) {
-        chapterService.deleteById(chapterId);
-        return ResultCommon.success();
+    public Boolean deleteChapterById(@PathVariable("id") Long chapterId) {
+        Boolean result = chapterService.deleteById(chapterId);
+        return result;
     }
 }
 

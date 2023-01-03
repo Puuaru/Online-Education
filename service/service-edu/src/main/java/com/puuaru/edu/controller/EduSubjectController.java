@@ -25,14 +25,17 @@ import java.util.List;
 @CrossOrigin
 public class EduSubjectController {
 
+    private final EduSubjectService eduSubjectService;
+
     @Autowired
-    private EduSubjectService eduSubjectService;
+    public EduSubjectController(EduSubjectService eduSubjectService) {
+        this.eduSubjectService = eduSubjectService;
+    }
 
     @PostMapping("")
     @ApiOperation("从 excel 文件中获取课程分类")
-    public ResultCommon saveSubject(@RequestPart("file") MultipartFile file) {
+    public void saveSubject(@RequestPart("file") MultipartFile file) {
         eduSubjectService.saveSubject(file);
-        return ResultCommon.success();
     }
 
     @GetMapping("")

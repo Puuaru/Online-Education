@@ -59,6 +59,10 @@ public class ResponseAdvice implements ResponseBodyAdvice {
             return body;
         }
 
+        if (body instanceof Boolean) {
+            return (Boolean) body ? ResultCommon.success() : ResultCommon.fail();
+        }
+
         if (body == null) {
             return ResultCommon.success();
         }

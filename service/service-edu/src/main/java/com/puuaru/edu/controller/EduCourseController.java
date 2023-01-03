@@ -7,7 +7,6 @@ import com.puuaru.edu.vo.CoursePublishInfo;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +24,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class EduCourseController {
 
+    private final EduCourseService courseService;
+
     @Autowired
-    EduCourseService courseService;
+    public EduCourseController(EduCourseService courseService) {
+        this.courseService = courseService;
+    }
 
     /**
      * 添加课程基本信息
@@ -76,15 +79,5 @@ public class EduCourseController {
         return coursePublishInfo;
     }
 
-    /**
-     * 发布课程时的回显信息
-     * @param id 课程id
-     * @return
-     */
-    @GetMapping("/publish/{id}")
-    @ApiOperation("发布课程时的回显信息")
-    public ResultCommon getPublishInfo(@PathVariable Long id) {
-        CoursePublishInfo coursePublishInfo = courseService.getCoursePublishInfo(id);
-        return ResultCommon.success().setData("items", coursePublishInfo);
-    }
+
 }

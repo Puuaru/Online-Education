@@ -32,8 +32,12 @@ import java.util.Map;
 @Api(value = "teacher management")
 @CrossOrigin
 public class EduTeacherController {
+    private final EduTeacherService eduTeacherService;
+
     @Autowired
-    EduTeacherService eduTeacherService;
+    public EduTeacherController(EduTeacherService eduTeacherService) {
+        this.eduTeacherService = eduTeacherService;
+    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取教师信息")
@@ -62,8 +66,8 @@ public class EduTeacherController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "根据id删除教师")
-    public ResultCommon removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
-        return eduTeacherService.removeById(id) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
+        return eduTeacherService.removeById(id);
     }
 
     /**
@@ -74,8 +78,8 @@ public class EduTeacherController {
      */
     @PostMapping("")
     @ApiOperation("添加教师")
-    public ResultCommon add(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.save(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean add(@RequestBody EduTeacher eduTeacher) {
+        return eduTeacherService.save(eduTeacher);
     }
 
     /**
@@ -86,8 +90,8 @@ public class EduTeacherController {
      */
     @PutMapping("")
     @ApiOperation(value = "根据id修改教师数据")
-    public ResultCommon updateTeacher(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.updateById(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean updateTeacher(@RequestBody EduTeacher eduTeacher) {
+        return eduTeacherService.updateById(eduTeacher);
     }
 
     /**
