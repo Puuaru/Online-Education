@@ -35,8 +35,8 @@ public class ResponseAdvice implements ResponseBodyAdvice {
 
     /**
      * 统一处理返回结果，减少如ResultCommon.success().setData("items", obj)的代码
-     * @param o
-     * @param methodParameter
+     * @param body
+     * @param returnType
      * @param mediaType
      * @param aClass
      * @param serverHttpRequest
@@ -44,20 +44,26 @@ public class ResponseAdvice implements ResponseBodyAdvice {
      * @return
      */
     @Override
-    public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if (o instanceof String) {
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        if (body instanceof String) {
             // String类单独处理
             try {
-                return objectMapper.writeValueAsString(ResultCommon.success().setData("msg", o));
+                return objectMapper.writeValueAsString(ResultCommon.success().setData("msg", body));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
         }
+
         // 对于已封装的ResultCommon不进行处理，避免嵌套重复处理并提高灵活性
-        if (o instanceof ResultCommon) {
-            return o;
+        if (body instanceof ResultCommon) {
+            return body;
         }
+
+        if (body == null) {
+            return ResultCommon.success();
+        }
+
         // 封装为ResultCommon，其中载荷为items
-        return ResultCommon.success().setData("items", o);
+        return ResultCommon.success().setData("items", body);
     }
 }
