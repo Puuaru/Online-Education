@@ -9,6 +9,7 @@
     <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="springBoot"/>
     <!--日志文件保存路径-->
     <!--java.io.tmpdir: C:\Users\{YOUR_USER_NAME}\AppData\Local\Temp-->
+    <!-- /tmp/logs -->
     <property name="LOG_FILE_PATH" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logs}"/>
 
     <!--DEBUG日志输出到文件-->

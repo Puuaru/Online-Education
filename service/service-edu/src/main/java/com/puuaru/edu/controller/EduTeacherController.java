@@ -10,6 +10,7 @@ import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -32,14 +33,18 @@ import java.util.Map;
 @Api(value = "teacher management")
 @CrossOrigin
 public class EduTeacherController {
+    private final EduTeacherService eduTeacherService;
+
     @Autowired
-    EduTeacherService eduTeacherService;
+    public EduTeacherController(EduTeacherService eduTeacherService) {
+        this.eduTeacherService = eduTeacherService;
+    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取教师信息")
-    public ResultCommon getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
+    public EduTeacher getById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
         EduTeacher teacher = eduTeacherService.getById(id);
-        return ResultCommon.success().setData("items", teacher);
+        return teacher;
     }
 
     /**
@@ -49,9 +54,9 @@ public class EduTeacherController {
      */
     @GetMapping("/list")
     @ApiOperation(value = "查询所有教师信息")
-    public ResultCommon getList() {
+    public List<EduTeacher> getList() {
         List<EduTeacher> list = eduTeacherService.list();
-        return ResultCommon.success().setData("items", list);
+        return list;
     }
 
     /**
@@ -62,8 +67,8 @@ public class EduTeacherController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "根据id删除教师")
-    public ResultCommon removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
-        return eduTeacherService.removeById(id) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean removeById(@PathVariable("id") @ApiParam(value = "teacher_id", name = "id", required = true) Long id) {
+        return eduTeacherService.removeById(id);
     }
 
     /**
@@ -74,8 +79,8 @@ public class EduTeacherController {
      */
     @PostMapping("")
     @ApiOperation("添加教师")
-    public ResultCommon add(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.save(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean add(@RequestBody EduTeacher eduTeacher) {
+        return eduTeacherService.save(eduTeacher);
     }
 
     /**
@@ -86,8 +91,8 @@ public class EduTeacherController {
      */
     @PutMapping("")
     @ApiOperation(value = "根据id修改教师数据")
-    public ResultCommon updateTeacher(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.updateById(eduTeacher) ? ResultCommon.success() : ResultCommon.fail();
+    public Boolean updateTeacher(@RequestBody EduTeacher eduTeacher) {
+        return eduTeacherService.updateById(eduTeacher);
     }
 
     /**
@@ -100,10 +105,8 @@ public class EduTeacherController {
     @GetMapping("/page/{current}/{limit}")
     @ApiOperation(value = "分页查询教师")
     public ResultCommon getPage(@PathVariable("current") long current, @PathVariable("limit") long limit) {
-        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
-        eduTeacherService.page(pageTeacher);
-
-        return getPageResultCommon(pageTeacher);
+        Map<String, Object> result = eduTeacherService.getPage(current, limit, null);
+        return ResultCommon.success().setData(result);
     }
 
     /**
@@ -116,39 +119,9 @@ public class EduTeacherController {
      */
     @PostMapping("/page/condition/{current}/{limit}")
     @ApiOperation(value = "根据条件分页查询教师")
-    @CrossOrigin
     public ResultCommon getPageCondition(@PathVariable("current") long current, @PathVariable("limit") long limit, @RequestBody(required = false) TeacherQuery teacherQuery) {
-        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
-
-        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
-        String name = teacherQuery.getName();
-        Integer level = teacherQuery.getLevel();
-        String begin = teacherQuery.getBegin();
-        String end = teacherQuery.getEnd();
-        if (StringUtils.hasText(name)) {
-            wrapper.like("name", name);
-        }
-        if (!ObjectUtils.isEmpty(level)) {
-            wrapper.eq("level", level);
-        }
-        if (StringUtils.hasText(begin)) {
-            wrapper.gt("gmt_create", begin);
-        }
-        if (StringUtils.hasText(end)) {
-            wrapper.le("gmt_modified", end);
-        }
-
-        eduTeacherService.page(pageTeacher, wrapper);
-        return getPageResultCommon(pageTeacher);
-    }
-
-    private ResultCommon getPageResultCommon(Page<EduTeacher> pageTeacher) {
-        long total = pageTeacher.getTotal();
-        List<EduTeacher> records = pageTeacher.getRecords();
-        Map<String, Object> map = new HashMap<>();
-        map.put("total", total);
-        map.put("items", records);
-        return ResultCommon.success().setData(map);
+        Map<String, Object> result = eduTeacherService.getPage(current, limit, teacherQuery);
+        return ResultCommon.success().setData(result);
     }
 }
 

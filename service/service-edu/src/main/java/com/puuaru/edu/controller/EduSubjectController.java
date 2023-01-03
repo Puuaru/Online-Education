@@ -25,21 +25,24 @@ import java.util.List;
 @CrossOrigin
 public class EduSubjectController {
 
+    private final EduSubjectService eduSubjectService;
+
     @Autowired
-    private EduSubjectService eduSubjectService;
+    public EduSubjectController(EduSubjectService eduSubjectService) {
+        this.eduSubjectService = eduSubjectService;
+    }
 
     @PostMapping("")
     @ApiOperation("从 excel 文件中获取课程分类")
-    public ResultCommon saveSubject(@RequestPart("file") MultipartFile file) {
+    public void saveSubject(@RequestPart("file") MultipartFile file) {
         eduSubjectService.saveSubject(file);
-        return ResultCommon.success();
     }
 
     @GetMapping("")
     @ApiOperation("递归获取课程分类信息")
-    public ResultCommon getSubject() {
+    public List<SubjectVO> getSubject() {
         List<SubjectVO> subjectTree = eduSubjectService.getSubjectTree();
-        return ResultCommon.success().setData("items", subjectTree);
+        return subjectTree;
     }
 }
 

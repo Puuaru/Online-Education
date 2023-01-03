@@ -3,12 +3,16 @@ package com.puuaru.edu.controller;
 
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.CourseInfo;
+import com.puuaru.edu.vo.CoursePublishInfo;
+import com.puuaru.edu.vo.CourseQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -24,12 +28,16 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class EduCourseController {
 
+    private final EduCourseService courseService;
+
     @Autowired
-    EduCourseService courseService;
+    public EduCourseController(EduCourseService courseService) {
+        this.courseService = courseService;
+    }
 
     /**
      * 添加课程基本信息
-     * @param courseInfo
+     * @param courseInfo 课程基本信息
      * @return
      */
     @PostMapping("")
@@ -46,9 +54,9 @@ public class EduCourseController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据课程id查询课程信息")
-    public ResultCommon getCourseInfo(@PathVariable("id") Long id) {
+    public CourseInfo getCourseInfo(@PathVariable("id") Long id) {
         CourseInfo courseInfo = courseService.getCourseInfo(id);
-        return ResultCommon.success().setData("items", courseInfo);
+        return courseInfo;
     }
 
     /**
@@ -58,8 +66,53 @@ public class EduCourseController {
      */
     @PutMapping("")
     @ApiOperation("更新课程信息")
-    public ResultCommon updateCourseInfo(@RequestBody CourseInfo courseInfo) {
+    public CourseInfo updateCourseInfo(@RequestBody CourseInfo courseInfo) {
         courseService.updateCourseInfo(courseInfo);
-        return ResultCommon.success().setData("items", courseInfo);
+        return courseInfo;
+    }
+
+    /**
+     * 发布课程时的回显信息
+     * @param id 课程id
+     * @return
+     */
+    @GetMapping("/publish/{id}")
+    @ApiOperation("发布课程时的回显信息")
+    public CoursePublishInfo getPublishInfo(@PathVariable Long id) {
+        CoursePublishInfo coursePublishInfo = courseService.getCoursePublishInfo(id);
+        return coursePublishInfo;
+    }
+
+    /**
+     * 修改课程状态，正式发布课程
+     * @param id
+     * @return
+     */
+    @PutMapping("/publish/{id}")
+    @ApiOperation("修改课程状态，正式发布课程")
+    public Boolean publishCourse(@PathVariable Long id) {
+        Boolean result = courseService.publishCourse(id);
+        return result;
+    }
+
+    /**
+     * 条件分页查询课程
+     * @param current
+     * @param limit
+     * @param courseQuery
+     * @return
+     */
+    @PostMapping("/condition/{current}/{limit}")
+    @ApiOperation("条件分页查询课程")
+    public ResultCommon getCoursePage(@PathVariable long current, @PathVariable long limit, @RequestBody CourseQuery courseQuery) {
+        Map<String, Object> result = courseService.getPage(current, limit, courseQuery);
+        return ResultCommon.success().setData(result);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation("根据id删除课程及其章节小节")
+    public Boolean deleteCourse(@PathVariable Long id) {
+        Boolean result = courseService.removeCourseById(id);
+        return result;
     }
 }

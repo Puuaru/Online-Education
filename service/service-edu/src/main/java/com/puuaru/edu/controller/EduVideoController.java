@@ -22,8 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class EduVideoController {
 
+    private final EduVideoService videoService;
+
     @Autowired
-    EduVideoService videoService;
+    public EduVideoController(EduVideoService videoService) {
+        this.videoService = videoService;
+    }
 
     /**
      * 根据小节id获取小节信息
@@ -32,9 +36,9 @@ public class EduVideoController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据小节id获取小节信息")
-    public ResultCommon getVideoById(@PathVariable Long id) {
+    public EduVideo getVideoById(@PathVariable Long id) {
         EduVideo video = videoService.getById(id);
-        return ResultCommon.success().setData("items", video);
+        return video;
     }
 
     /**
@@ -44,9 +48,9 @@ public class EduVideoController {
      */
     @PostMapping("")
     @ApiOperation("添加小节")
-    public ResultCommon saveVideo(@RequestBody EduVideo video) {
-        videoService.save(video);
-        return ResultCommon.success();
+    public Boolean saveVideo(@RequestBody EduVideo video) {
+        Boolean result = videoService.save(video);
+        return result;
     }
 
     /**
@@ -56,9 +60,9 @@ public class EduVideoController {
      */
     @PutMapping("")
     @ApiOperation("根据小节id更新小节信息")
-    public ResultCommon updateVideo(@RequestBody EduVideo video) {
+    public EduVideo updateVideo(@RequestBody EduVideo video) {
         videoService.updateById(video);
-        return ResultCommon.success().setData("items", video);
+        return video;
     }
 
     /**
@@ -69,9 +73,9 @@ public class EduVideoController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation("根据小节id删除小节信息")
-    public ResultCommon removeVideo(@PathVariable Long id) {
-        videoService.removeById(id);
-        return ResultCommon.success();
+    public Boolean removeVideo(@PathVariable Long id) {
+        Boolean result = videoService.removeById(id);
+        return result;
     }
 }
 

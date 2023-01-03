@@ -34,9 +34,11 @@ public class EduVideo implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "课程ID")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     @ApiModelProperty(value = "章节ID")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long chapterId;
 
     @ApiModelProperty(value = "节点名称")
