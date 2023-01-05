@@ -1,0 +1,12 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: service-vod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/edu-dev?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: password
+  profiles:
+    active: dev
