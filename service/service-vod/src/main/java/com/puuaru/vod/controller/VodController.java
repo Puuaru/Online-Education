@@ -1,0 +1,61 @@
+package com.puuaru.vod.controller;
+
+import com.puuaru.utils.ResultCommon;
+import com.puuaru.vod.service.VodService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * @Description: VodController
+ * @Author: puuaru
+ * @Date: 2023/1/6
+ */
+@RestController
+@RequestMapping("/vod")
+public class VodController {
+    private final VodService vodService;
+
+    @Autowired
+    public VodController(VodService vodService) {
+        this.vodService = vodService;
+    }
+
+    /**
+     * 上传视频
+     * @param video
+     * @return
+     */
+    @PostMapping("")
+    @ApiOperation("上传视频")
+    public ResultCommon uploadVideo(@RequestPart("file") MultipartFile video) {
+        String videoId = vodService.uploadVideo(video);
+        return ResultCommon.success().setData("videoId", videoId);
+    }
+
+    /**
+     * 删除视频
+     * @param videoId
+     * @return
+     */
+    @DeleteMapping("{id}")
+    @ApiOperation("删除视频")
+    public Boolean deleteVideo(@PathVariable("id") String videoId) {
+        Boolean result = vodService.deleteVideo(videoId);
+        return result;
+    }
+
+    /**
+     * 获取加密视频的播放凭证
+     * @param videoId
+     * @return
+     */
+    @GetMapping("{id}")
+    @ApiOperation("获取加密视频的播放凭证")
+    public ResultCommon getPlayAuth(@PathVariable("id") String videoId) {
+        String playAuth = vodService.getPlayAuth(videoId);
+        return ResultCommon.success().setData("playAuth", playAuth);
+    }
+
+}
