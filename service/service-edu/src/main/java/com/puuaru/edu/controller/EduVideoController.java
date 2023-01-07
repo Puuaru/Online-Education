@@ -74,7 +74,7 @@ public class EduVideoController {
     @DeleteMapping("/{id}")
     @ApiOperation("根据小节id删除小节信息")
     public Boolean removeVideo(@PathVariable Long id) {
-        Boolean result = videoService.removeById(id);
+        Boolean result = videoService.removeVideo(id);
         return result;
     }
 }
