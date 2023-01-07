@@ -9,8 +9,10 @@ import com.puuaru.edu.entity.EduVideo;
 import com.puuaru.edu.mapper.EduChapterMapper;
 import com.puuaru.edu.mapper.EduCourseMapper;
 import com.puuaru.edu.mapper.EduVideoMapper;
+import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseDescriptionService;
 import com.puuaru.edu.service.EduCourseService;
+import com.puuaru.edu.service.EduVideoService;
 import com.puuaru.edu.vo.CourseInfo;
 import com.puuaru.edu.vo.CoursePublishInfo;
 import com.puuaru.edu.vo.CourseQuery;
@@ -22,6 +24,7 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -36,15 +39,15 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     private final EduCourseDescriptionService courseDescriptionService;
 
-    private final EduVideoMapper videoMapper;
+    private final EduVideoService videoService;
 
-    private final EduChapterMapper chapterMapper;
+    private final EduChapterService chapterService;
 
     @Autowired
-    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoMapper videoMapper, EduChapterMapper chapterMapper) {
+    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoService videoService, EduChapterService chapterService) {
         this.courseDescriptionService = courseDescriptionService;
-        this.videoMapper = videoMapper;
-        this.chapterMapper = chapterMapper;
+        this.videoService = videoService;
+        this.chapterService = chapterService;
     }
 
     /**
@@ -138,25 +141,15 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public Boolean removeCourseById(Long id) {
+    public Boolean removeCourseById(Long courseId) {
         // 考虑到查询计数带来的性能损失，只通过course表的删除结果判断是否成功执行
-        Boolean result = this.removeById(id);
-        courseDescriptionService.removeById(id);
+        Boolean result = this.removeById(courseId);
+        courseDescriptionService.removeById(courseId);
 
         QueryWrapper chapterWrapper = new QueryWrapper<>();
-        chapterWrapper.eq("course_id", id);
-        chapterMapper.delete(chapterWrapper);
-
-        // 获取视频源id，删除小节
-        QueryWrapper videoWrapper = new QueryWrapper<>();
-        videoWrapper.select("video_source_id").eq("course_id", id);
-        List<EduVideo> videos = videoMapper.selectList(videoWrapper);
-        videoWrapper.clear();
-        videoWrapper.eq("course_id", id);
-        videoMapper.delete(videoWrapper);
-        videos.forEach(item -> {
-            // TODO: 删除视频
-        });
+        chapterWrapper.eq("course_id", courseId);
+        chapterService.remove(chapterWrapper);
+        videoService.removeVideosByCourseId(courseId);
 
         return result;
     }

@@ -26,14 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChapter> implements EduChapterService {
 
-    //private final EduVideoService videoService;
-
     private final EduVideoService videoService;
-
-    //@Autowired
-    //public EduChapterServiceImpl(EduVideoService videoService) {
-    //    this.videoService = videoService;
-    //}
 
     @Autowired
     public EduChapterServiceImpl(EduVideoService videoService) {
@@ -50,10 +43,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     public Boolean deleteById(Long chapterId) {
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id", chapterId);
-        List<EduVideo> videos = videoService.list(wrapper);
-        videos.forEach(video -> videoService.removeVideo(video.getId()));
-        videoService.remove(wrapper);
-        // (?) delete videos from remote server
+        videoService.removeVideosByChapterId(chapterId);
 
         // 考虑到查询小节条目数带来的性能损失，删除的成功与否以chapter删除的结果为依据
         Boolean result = super.removeById(chapterId);
