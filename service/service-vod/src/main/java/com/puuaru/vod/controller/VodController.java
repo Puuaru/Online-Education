@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/vod")
+@CrossOrigin
 public class VodController {
     private final VodService vodService;
 
@@ -36,25 +37,25 @@ public class VodController {
 
     /**
      * 删除视频
-     * @param videoId
+     * @param videoSourceId
      * @return
      */
     @DeleteMapping("{id}")
     @ApiOperation("删除视频")
-    public Boolean deleteVideo(@PathVariable("id") String videoId) {
-        Boolean result = vodService.deleteVideo(videoId);
+    public Boolean deleteSourceVideo(@PathVariable("id") String videoSourceId) {
+        Boolean result = vodService.deleteSourceVideo(videoSourceId);
         return result;
     }
 
     /**
      * 获取加密视频的播放凭证
-     * @param videoId
+     * @param videoSourceId
      * @return
      */
     @GetMapping("{id}")
     @ApiOperation("获取加密视频的播放凭证")
-    public ResultCommon getPlayAuth(@PathVariable("id") String videoId) {
-        String playAuth = vodService.getPlayAuth(videoId);
+    public ResultCommon getPlayAuth(@PathVariable("id") String videoSourceId) {
+        String playAuth = vodService.getPlayAuth(videoSourceId);
         return ResultCommon.success().setData("playAuth", playAuth);
     }
 

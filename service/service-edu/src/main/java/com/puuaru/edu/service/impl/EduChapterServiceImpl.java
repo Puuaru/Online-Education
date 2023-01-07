@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.edu.entity.EduChapter;
 import com.puuaru.edu.entity.EduVideo;
 import com.puuaru.edu.mapper.EduChapterMapper;
-import com.puuaru.edu.mapper.EduVideoMapper;
 import com.puuaru.edu.service.EduChapterService;
+import com.puuaru.edu.service.EduVideoService;
 import com.puuaru.edu.vo.ChapterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
 
     //private final EduVideoService videoService;
 
-    private final EduVideoMapper videoMapper;
+    private final EduVideoService videoService;
 
     //@Autowired
     //public EduChapterServiceImpl(EduVideoService videoService) {
@@ -36,8 +36,8 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     //}
 
     @Autowired
-    public EduChapterServiceImpl(EduVideoMapper videoMapper) {
-        this.videoMapper = videoMapper;
+    public EduChapterServiceImpl(EduVideoService videoService) {
+        this.videoService = videoService;
     }
 
     /**
@@ -50,7 +50,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     public Boolean deleteById(Long chapterId) {
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id", chapterId);
-        videoMapper.delete(wrapper);
+        List<EduVideo> videos = videoService.list(wrapper);
+        videos.forEach(video -> videoService.removeVideo(video.getId()));
+        videoService.remove(wrapper);
         // (?) delete videos from remote server
 
         // 考虑到查询小节条目数带来的性能损失，删除的成功与否以chapter删除的结果为依据
@@ -90,7 +92,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     private List<EduVideo> getChildVideoList(ChapterVO item) {
         QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
         videoWrapper.eq("chapter_id", item.getId());
-        List<EduVideo> videoList = videoMapper.selectList(videoWrapper);
+        List<EduVideo> videoList = videoService.list(videoWrapper);
         // 根据sort字段进行排序
         videoList.sort(Comparator.comparing(EduVideo::getSort));
         return videoList;

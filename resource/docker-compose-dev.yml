@@ -1,5 +1,28 @@
 version: "3"
 services:
+  nacos:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-nacos
+    container_name: nacos
+    restart: always
+    ports:
+      - "8848:8848"
+    entrypoint: ./wait-for-it.sh mysql-dev:3306 -t 0 -- bin/docker-startup.sh
+    depends_on:
+      - mysql
+    environment:
+      - PREFER_HOST_MODE=hostname # 支持IP还是域名模式
+      - MODE=standalone # 单机模式
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql-dev
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=password
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    networks:
+      - web-edu
   mysql:
     image: mysql:8.0
     container_name: mysql-dev
@@ -19,6 +42,7 @@ services:
     restart: always
     volumes:
       - ./nginx/data/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/data/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
     networks:
