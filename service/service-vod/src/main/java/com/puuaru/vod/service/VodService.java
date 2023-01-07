@@ -47,7 +47,7 @@ public class VodService extends ServiceImpl<VodMapper, VodProperties> {
     }
 
     @SneakyThrows
-    public Boolean deleteVideo(String videoId) {
+    public Boolean deleteSourceVideo(String videoId) {
         VodProperties properties = getProperties();
         DefaultAcsClient client = InitClient.initClient(properties.getAccessKeyId(), properties.getAccessKeySecret());
         DeleteVideoRequest request = new DeleteVideoRequest();

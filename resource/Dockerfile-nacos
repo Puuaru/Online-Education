@@ -1,0 +1,3 @@
+FROM nacos/nacos-server:1.4.0
+COPY wait-for-it.sh /home/nacos
+RUN chmod +x /home/nacos/wait-for-it.sh
