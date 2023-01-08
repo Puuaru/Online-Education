@@ -18,5 +18,5 @@ public interface EduChapterService extends IService<EduChapter> {
 
     List<ChapterVO> getCourseDetails(Long courseId);
 
-    Boolean deleteById(Long chapterId);
+    Boolean removeChapterById(Long chapterId);
 }

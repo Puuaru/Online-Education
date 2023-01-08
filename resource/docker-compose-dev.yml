@@ -47,5 +47,13 @@ services:
       - "80:80"
     networks:
       - web-edu
+  sentinel:
+    image: bladex/sentinel-dashboard
+    container_name: sentinel-dashboard
+    restart: on-failure
+    ports:
+      - "8858:8858"
+    networks:
+      - web-edu
 networks:
   web-edu:
