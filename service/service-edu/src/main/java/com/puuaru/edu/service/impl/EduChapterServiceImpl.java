@@ -40,7 +40,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
      * @return
      */
     @Override
-    public Boolean deleteById(Long chapterId) {
+    public Boolean removeChapterById(Long chapterId) {
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("chapter_id", chapterId);
         videoService.removeVideosByChapterId(chapterId);

@@ -4,9 +4,7 @@ package com.puuaru.edu.controller;
 import com.puuaru.edu.entity.EduChapter;
 import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.vo.ChapterVO;
-import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,7 +86,7 @@ public class EduChapterController {
     @DeleteMapping("/{id}")
     @ApiOperation("根据章节id删除章节及其小节信息")
     public Boolean deleteChapterById(@PathVariable("id") Long chapterId) {
-        Boolean result = chapterService.deleteById(chapterId);
+        Boolean result = chapterService.removeChapterById(chapterId);
         return result;
     }
 }
