@@ -1,0 +1,24 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: service-vod
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.yml
+            refresh: true
+          - data-id: sentinel-feign.yml
+            refresh: true
+        file-extension: yml

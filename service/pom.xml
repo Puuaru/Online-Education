@@ -15,6 +15,7 @@
         <module>service-edu</module>
         <module>service-oss</module>
         <module>service-vod</module>
+        <module>service-cms</module>
     </modules>
 
     <properties>
@@ -41,13 +42,17 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!-- <dependency> -->
-        <!--     <groupId>com.alibaba.cloud</groupId> -->
-        <!--     <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId> -->
-        <!-- </dependency> -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <!-- <dependency> -->
         <!--     <groupId>org.springframework.cloud</groupId> -->
@@ -56,10 +61,6 @@
         <!-- <dependency> -->
         <!--     <groupId>com.alibaba.cloud</groupId> -->
         <!--     <artifactId>spring-cloud-starter-alibaba-seata</artifactId> -->
-        <!-- </dependency> -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.springframework.cloud</groupId> -->
-        <!--     <artifactId>spring-cloud-starter-bootstrap</artifactId> -->
         <!-- </dependency> -->
 
         <!-- spring boot -->

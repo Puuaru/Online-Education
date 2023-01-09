@@ -16,11 +16,12 @@
     <modules>
         <module>service</module>
         <module>common</module>
-        <module>common/common-utils</module>
+        <!-- <module>common/common-utils</module> -->
     </modules>
     <packaging>pom</packaging>
 
     <properties>
+        <nacos.namespace>de43bd2d-d011-4d15-8e2d-532057c2d69c</nacos.namespace>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
         <druid.version>1.2.5</druid.version>
@@ -198,5 +199,11 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>
