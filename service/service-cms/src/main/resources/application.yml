@@ -1,0 +1,18 @@
+server:
+  port: 8004
+spring:
+  application:
+    name: service-cms
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.yml
+            refresh: true
+        file-extension: yml

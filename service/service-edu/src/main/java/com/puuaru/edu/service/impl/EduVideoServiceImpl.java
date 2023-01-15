@@ -6,7 +6,10 @@ import com.puuaru.edu.feign.VodClient;
 import com.puuaru.edu.mapper.EduVideoMapper;
 import com.puuaru.edu.service.EduVideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.puuaru.servicebase.exception.FeignException;
+import com.puuaru.utils.ResultCommon;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -41,7 +44,10 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         if (!StringUtils.hasText(videoSourceId)) {
             return result;
         }
-        vodClient.deleteSourceVideo(videoSourceId);
+        ResultCommon vodResult = vodClient.deleteSourceVideo(videoSourceId);
+        if (vodResult.getCode() == 404) {
+            throw new FeignException("删除视频失败");
+        }
         return result;
     }
 
@@ -78,7 +84,10 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         if (!StringUtils.hasText(videoSourceIds)) {
             return result;
         }
-        vodClient.deleteSourceVideo(videoSourceIds);
+        ResultCommon vodResult = vodClient.deleteSourceVideo(videoSourceIds);
+        if (vodResult.getCode() == 404) {
+            throw new FeignException("删除视频失败");
+        }
         return result;
     }
 }

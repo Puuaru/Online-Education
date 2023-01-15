@@ -1,5 +1,6 @@
 package com.puuaru.servicebase.handler;
 
+import com.puuaru.servicebase.exception.FeignException;
 import com.puuaru.utils.ResultCommon;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ResponseBody
+    @ExceptionHandler(FeignException.class)
+    public ResultCommon feignExceptionHandler(FeignException e) {
+        e.printStackTrace();
+        return ResultCommon.fail().setMessage(e.getMessage());
+    }
+
     /**
      * 通用异常处理器
      * @param e
@@ -20,7 +28,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResultCommon error(Exception e) {
+    public ResultCommon globalExceptionHandler(Exception e) {
         e.printStackTrace();
         return ResultCommon.fail().setMessage("Global exception caught");
     }

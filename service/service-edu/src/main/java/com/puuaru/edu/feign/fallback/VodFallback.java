@@ -14,7 +14,6 @@ public class VodFallback implements VodClient {
     @Override
     public ResultCommon deleteSourceVideo(String id) {
         ResultCommon result = ResultCommon.fail().setMessage("Vod服务调用失败");
-        System.out.println("soutFlag" + result);
         return result;
     }
 }
