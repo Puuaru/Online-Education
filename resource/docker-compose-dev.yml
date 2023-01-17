@@ -36,6 +36,14 @@ services:
       - ./sql/data/log:/var/log/mysql
     networks:
       - web-edu
+  redis:
+    image: redis:6.2.4
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - web-edu
   nginx:
     image: nginx:1.22
     container_name: nginx

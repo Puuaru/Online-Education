@@ -8,6 +8,7 @@ import com.puuaru.cms.service.CrmBannerService;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/cms")
+@CrossOrigin
 public class CrmBannerController {
 
     private final CrmBannerService crmBannerService;
@@ -49,6 +51,7 @@ public class CrmBannerController {
      */
     @GetMapping("")
     @ApiOperation("获取最后4个banner")
+    @Cacheable(value = "index", key = "'banner'")
     public List<CrmBanner> getNewCrm() {
         QueryWrapper<CrmBanner> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id").last("limit 4");

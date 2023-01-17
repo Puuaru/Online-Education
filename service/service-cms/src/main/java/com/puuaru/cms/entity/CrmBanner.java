@@ -1,13 +1,16 @@
 package com.puuaru.cms.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -26,6 +29,7 @@ public class CrmBanner implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "标题")
