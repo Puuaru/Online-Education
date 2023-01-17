@@ -40,7 +40,7 @@ public class VodController {
      * @param videoSourceId
      * @return
      */
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ApiOperation("删除视频")
 
     public Boolean deleteSourceVideo(@PathVariable("id") String videoSourceId) {
@@ -53,7 +53,7 @@ public class VodController {
      * @param videoSourceId
      * @return
      */
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @ApiOperation("获取加密视频的播放凭证")
     public ResultCommon getPlayAuth(@PathVariable("id") String videoSourceId) {
         String playAuth = vodService.getPlayAuth(videoSourceId);

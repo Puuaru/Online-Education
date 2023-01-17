@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.puuaru.cms")
+@MapperScan("com.puuaru.cms.mapper")
 public class MybatisPlusConfig {
 
     @Bean
