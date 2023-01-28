@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-01-27
  */
 public interface UcenterMemberService extends IService<UcenterMember> {
+    String login(UcenterMember loginInfo);
 
 }
