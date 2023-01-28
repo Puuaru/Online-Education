@@ -21,6 +21,13 @@ public class GlobalExceptionHandler {
         return ResultCommon.fail().setMessage(e.getMessage());
     }
 
+    @ResponseBody
+    @ExceptionHandler(RuntimeException.class)
+    public ResultCommon RuntimeExceptionHandler(RuntimeException e) {
+        e.printStackTrace();
+        return ResultCommon.fail().setMessage(e.getMessage());
+    }
+
     /**
      * 通用异常处理器
      * @param e
