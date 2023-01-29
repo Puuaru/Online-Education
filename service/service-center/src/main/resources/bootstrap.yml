@@ -16,3 +16,8 @@ spring:
           - data-id: application-${spring.profiles.active}.yml
             refresh: true
         file-extension: yml
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    properties:
+      "mail.smtp.ssl.enable" : true
