@@ -3,10 +3,12 @@ package com.puuaru.center.controller;
 
 import com.puuaru.center.entity.UcenterMember;
 import com.puuaru.center.service.UcenterMemberService;
+import com.puuaru.center.vo.MemberRegisterVo;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +41,18 @@ public class UcenterMemberController {
     public ResultCommon login(UcenterMember ucenterMember) {
         String token = memberService.login(ucenterMember);
         return ResultCommon.success().setData("token", token);
+    }
+
+    /**
+     * 注册新账户
+     * @param registerVo
+     * @return
+     */
+    @PostMapping("/register")
+    @ApiOperation("注册新账户")
+    public UcenterMember register(@RequestBody MemberRegisterVo registerVo) {
+        UcenterMember createdMember = memberService.register(registerVo);
+        return createdMember;
     }
 }
 
