@@ -57,6 +57,11 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return JwtUtils.generateJwt(user.getId(), user.getNickname());
     }
 
+    /**
+     * 基础注册逻辑
+     * @param registerVo
+     * @return
+     */
     @Override
     public UcenterMember register(MemberRegisterVo registerVo) {
         String nickname = registerVo.getNickname();

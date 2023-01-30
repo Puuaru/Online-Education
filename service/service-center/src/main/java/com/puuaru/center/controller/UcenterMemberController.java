@@ -4,14 +4,13 @@ package com.puuaru.center.controller;
 import com.puuaru.center.entity.UcenterMember;
 import com.puuaru.center.service.UcenterMemberService;
 import com.puuaru.center.vo.MemberRegisterVo;
+import com.puuaru.utils.JwtUtils;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -41,6 +40,19 @@ public class UcenterMemberController {
     public ResultCommon login(UcenterMember ucenterMember) {
         String token = memberService.login(ucenterMember);
         return ResultCommon.success().setData("token", token);
+    }
+
+    /**
+     * 根据token获取用户信息
+     * @param request
+     * @return
+     */
+    @GetMapping("/member-info")
+    @ApiOperation("根据token获取用户信息")
+    public UcenterMember getMemberInfo(HttpServletRequest request) {
+        String memberId = JwtUtils.getMemberIdByJwt(request);
+        UcenterMember memberInfo = memberService.getById(memberId);
+        return memberInfo;
     }
 
     /**
