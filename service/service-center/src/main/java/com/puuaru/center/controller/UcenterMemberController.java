@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-01-27
  */
 @RestController
-@RequestMapping("/center/ucenter-member")
+@RequestMapping("/center/member")
 public class UcenterMemberController {
     private final UcenterMemberService memberService;
 
