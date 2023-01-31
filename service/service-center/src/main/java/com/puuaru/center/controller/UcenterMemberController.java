@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/center/member")
+@CrossOrigin
 public class UcenterMemberController {
     private final UcenterMemberService memberService;
 
@@ -32,22 +33,24 @@ public class UcenterMemberController {
 
     /**
      * 前台登录
+     *
      * @param ucenterMember 前台前端传递的用户数据
      * @return 用户数据token
      */
     @PostMapping("/login")
     @ApiOperation("前台登录")
-    public ResultCommon login(UcenterMember ucenterMember) {
+    public ResultCommon login(@RequestBody UcenterMember ucenterMember) {
         String token = memberService.login(ucenterMember);
         return ResultCommon.success().setData("token", token);
     }
 
     /**
      * 根据token获取用户信息
+     *
      * @param request
      * @return
      */
-    @GetMapping("/member-info")
+    @GetMapping("/memberInfo")
     @ApiOperation("根据token获取用户信息")
     public UcenterMember getMemberInfo(HttpServletRequest request) {
         String memberId = JwtUtils.getMemberIdByJwt(request);
@@ -57,6 +60,7 @@ public class UcenterMemberController {
 
     /**
      * 注册新账户
+     *
      * @param registerVo
      * @return
      */

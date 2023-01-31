@@ -1,14 +1,15 @@
 package com.puuaru.center.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.entity.UcenterMember;
 import com.puuaru.center.mapper.UcenterMemberMapper;
 import com.puuaru.center.service.UcenterMemberService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.vo.MemberRegisterVo;
 import com.puuaru.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
 
 /**
  * <p>
- * 会员表 服务实现类
+ * 会员表 服务实现类，密码使用 BCrypt 强哈希方法加密
  * </p>
  *
  * @author puuaru
@@ -25,10 +26,12 @@ import java.util.Objects;
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
     private final RedisTemplate redisTemplate;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UcenterMemberServiceImpl(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     /**
@@ -47,7 +50,8 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
         wrapper.eq("email", loginEmail);
         UcenterMember user = super.getOne(wrapper);
-        if (ObjectUtils.isEmpty(user) || !Objects.equals(user.getPassword(), loginPassword)) {
+        boolean match = bCryptPasswordEncoder.matches(loginPassword, user.getPassword());
+        if (ObjectUtils.isEmpty(user) || !match) {
             throw new RuntimeException("邮箱或密码不正确");
         }
         if (user.getIsDisabled()) {
@@ -65,7 +69,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     @Override
     public UcenterMember register(MemberRegisterVo registerVo) {
         String nickname = registerVo.getNickname();
-        String password = registerVo.getPassword();
+        String rawPassword = registerVo.getPassword();
         String email = registerVo.getEmail();
         String code = registerVo.getCode();
 
@@ -75,8 +79,9 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         }
 
         UcenterMember member = new UcenterMember();
+        String encodedPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setNickname(nickname);
-        member.setPassword(password);
+        member.setPassword(encodedPassword);
         member.setEmail(email);
         member.setAvatar("https://online-education-puuaru.oss-cn-shenzhen.aliyuncs.com/2023/01/30/96ed892eb143463e92da0f9a6c743f59avataaars.png");
         super.save(member);
