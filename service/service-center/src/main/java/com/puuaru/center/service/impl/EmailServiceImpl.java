@@ -4,10 +4,10 @@ import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.entity.UcenterMember;
-import com.puuaru.center.mapper.EmailMapper;
+import com.puuaru.center.mapper.ThreePartyPropertiesMapper;
 import com.puuaru.center.service.EmailService;
 import com.puuaru.center.service.UcenterMemberService;
-import com.puuaru.center.thirdparty.Email;
+import com.puuaru.center.entity.ThreePartyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2023/1/29
  */
 @Service
-public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements EmailService {
+public class EmailServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, ThreePartyProperties> implements EmailService {
     private final JavaMailSenderImpl sender;
     private final TemplateEngine templateEngine;
     private final RedisTemplate<String, Object> redisTemplate;
@@ -43,11 +43,11 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
 
     @PostConstruct
     public void init() {
-        QueryWrapper<Email> wrapper = new QueryWrapper<>();
+        QueryWrapper<ThreePartyProperties> wrapper = new QueryWrapper<>();
         wrapper.eq("name", "email");
-        Email email = super.getOne(wrapper);
-        sender.setUsername(email.getUsername());
-        sender.setPassword(email.getPassword());
+        ThreePartyProperties email = super.getOne(wrapper);
+        sender.setUsername(email.getClientId());
+        sender.setPassword(email.getSecret());
     }
 
     /**

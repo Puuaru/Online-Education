@@ -1,4 +1,4 @@
-package com.puuaru.center.thirdparty;
+package com.puuaru.center.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,10 +11,10 @@ import lombok.Data;
  */
 @Data
 @TableName("three_party_info")
-public class Email {
+public class ThreePartyProperties {
     @TableField("id")
-    String username;
+    String clientId;
 
     @TableField("secret")
-    String password;
+    String secret;
 }
