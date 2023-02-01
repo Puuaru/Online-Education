@@ -1,0 +1,23 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: service-center
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.yml
+            refresh: true
+        file-extension: yml
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    properties:
+      "mail.smtp.ssl.enable" : true

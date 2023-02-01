@@ -1,9 +1,13 @@
-package com.puuaru.cms.entity;
+package com.puuaru.center.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -11,43 +15,55 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 首页banner表
+ * 会员表
  * </p>
  *
  * @author puuaru
- * @since 2023-01-11
+ * @since 2023-01-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="CrmBanner对象", description="首页banner表")
-public class CrmBanner implements Serializable {
+@ApiModel(value="UcenterMember对象", description="会员表")
+public class UcenterMember implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "会员id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+    private String id;
 
-    @ApiModelProperty(value = "标题")
-    private String title;
+    @ApiModelProperty(value = "第三方id")
+    private String openid;
 
-    @ApiModelProperty(value = "图片地址")
-    private String imageUrl;
+    @ApiModelProperty(value = "邮箱号")
+    private String email;
 
-    @ApiModelProperty(value = "链接地址")
-    private String linkUrl;
+    @ApiModelProperty(value = "密码")
+    private String password;
 
-    @ApiModelProperty(value = "排序")
-    private Integer sort;
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
+
+    @ApiModelProperty(value = "性别 0 女，1 男")
+    private Integer sex;
+
+    @ApiModelProperty(value = "年龄")
+    private Integer age;
+
+    @ApiModelProperty(value = "用户头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "用户签名")
+    private String sign;
+
+    @ApiModelProperty(value = "是否禁用 1（true）已禁用，  0（false）未禁用")
+    private Boolean isDisabled;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
-    private Integer isDeleted;
+    private Boolean isDeleted;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

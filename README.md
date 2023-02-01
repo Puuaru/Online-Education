@@ -12,7 +12,9 @@ online-education
 └── service             // 业务服务模块
     ├── service-edu     // 8001 提供主要服务的api
     ├── service-oss     // 8002 提供oss存储服务
-    └── service-vod     // 8003 提供视频点播服务
+    ├── service-vod     // 8003 提供视频点播服务
+    ├── service-cms     // 8005 提供首页控制服务
+    └── service-center  // 8005 提供用户登录注册服务
 ```
 
 ## 容器端口
