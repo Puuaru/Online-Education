@@ -55,6 +55,7 @@ public class UcenterMemberController {
     public UcenterMember getMemberInfo(HttpServletRequest request) {
         String memberId = JwtUtils.getMemberIdByJwt(request);
         UcenterMember memberInfo = memberService.getById(memberId);
+        memberInfo.setPassword(null);
         return memberInfo;
     }
 
