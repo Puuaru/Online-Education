@@ -56,6 +56,11 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
         return redirectUrl;
     }
 
+    /**
+     * Github OAuth 回调处理器，token置于请求参数
+     * @param code
+     * @return
+     */
     @Override
     public String callbackHandler(String code) {
         String baseTokenUrl = "https://github.com/login/oauth/access_token";
@@ -63,7 +68,7 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
         UrlHelper tokenUrlHelper = new UrlHelper(baseTokenUrl);
         UrlHelper redirectHelper = new UrlHelper(baseRedirectUrl);
         String tokenUrl = tokenUrlHelper.addParam("client_id", properties.getClientId())
-                .addParam("secret", properties.getSecret())
+                .addParam("client_secret", properties.getSecret())
                 .addParam("code", code)
                 .getUrl();
         String tokenInfo = HttpUtil.get(baseRedirectUrl);
