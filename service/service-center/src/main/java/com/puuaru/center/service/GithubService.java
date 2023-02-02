@@ -10,4 +10,6 @@ import com.puuaru.center.entity.ThreePartyProperties;
  */
 public interface GithubService extends IService<ThreePartyProperties> {
     String login();
+
+    String callbackHandler(String code);
 }

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -37,7 +38,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     /**
      * 登录逻辑
      * @param loginInfo
-     * @return
+     * @return 返回给用户的token
      */
     @Override
     public String login(UcenterMember loginInfo) {
@@ -87,5 +88,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         super.save(member);
 
         return member;
+    }
+
+    @Override
+    public UcenterMember handleGithubUser(Map<String, Object> userMap) {
+        return null;
     }
 }

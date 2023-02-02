@@ -37,7 +37,8 @@ public class GithubController {
 
     @GetMapping("/callback")
     @ApiOperation("Github重定向")
-    public void callback(String code) {
-        
+    public String callback(String code) {
+        String redirectUrl = githubService.callbackHandler(code);
+        return "redirect:" + redirectUrl;
     }
 }
