@@ -90,8 +90,22 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return member;
     }
 
+    /**
+     * 处理来自github的登录和注册
+     * @param userMap
+     * @return
+     */
     @Override
     public UcenterMember handleGithubUser(Map<String, Object> userMap) {
-        return null;
+        QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
+        wrapper.eq("openid", userMap.get("node_id"));
+        UcenterMember member = super.getOne(wrapper);
+        if (member == null) {
+            member.setNickname((String) userMap.get("login"));
+            member.setOpenid((String) userMap.get("node_id"));
+            member.setAvatar((String) userMap.get("avatar_url"));
+            super.save(member);
+        }
+        return member;
     }
 }
