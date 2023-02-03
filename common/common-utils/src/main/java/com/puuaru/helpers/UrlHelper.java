@@ -7,16 +7,16 @@ import java.util.Map;
  * @Author: puuaru
  * @Date: 2023/2/1
  */
-public class RedirectUrl {
+public class UrlHelper {
     private String url;
     private int paramCount;
 
-    public RedirectUrl(String url) {
-        this.url = url;
+    public UrlHelper(String baseUrl) {
+        this.url = baseUrl;
         paramCount = 0;
     }
 
-    public RedirectUrl addParams(Map<String, String> params) {
+    public UrlHelper addParams(Map<String, String> params) {
         StringBuilder suffixBuilder = new StringBuilder();
         if (paramCount < 1) {
             suffixBuilder.append("?");
@@ -24,16 +24,18 @@ public class RedirectUrl {
         params.forEach((key, value) -> {
             suffixBuilder.append(key + "=" + value + "&");
         });
+        paramCount += params.size();
         url = suffixBuilder.insert(0, url).toString();
         return this;
     }
 
-    public RedirectUrl addParam(String key, String value) {
+    public UrlHelper addParam(String key, String value) {
         StringBuilder suffixBuilder = new StringBuilder();
         if (paramCount < 1) {
             suffixBuilder.append("?");
         }
         suffixBuilder.append(key + "=" + value + "&");
+        paramCount++;
         url = suffixBuilder.insert(0, url).toString();
         return this;
     }

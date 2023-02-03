@@ -4,6 +4,8 @@ import com.puuaru.center.entity.UcenterMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puuaru.center.vo.MemberRegisterVo;
 
+import java.util.Map;
+
 /**
  * <p>
  * 会员表 服务类
@@ -17,4 +19,5 @@ public interface UcenterMemberService extends IService<UcenterMember> {
 
     UcenterMember register(MemberRegisterVo registerVo);
 
+    UcenterMember handleGithubUser(Map<String, Object> userMap);
 }

@@ -1,5 +1,6 @@
 package com.puuaru.center.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.entity.UcenterMember;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -37,7 +39,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
     /**
      * 登录逻辑
      * @param loginInfo
-     * @return
+     * @return 返回给用户的token
      */
     @Override
     public String login(UcenterMember loginInfo) {
@@ -86,6 +88,27 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         member.setAvatar("https://online-education-puuaru.oss-cn-shenzhen.aliyuncs.com/2023/01/30/96ed892eb143463e92da0f9a6c743f59avataaars.png");
         super.save(member);
 
+        return member;
+    }
+
+    /**
+     * 处理来自github的登录和注册
+     * @param userMap
+     * @return
+     */
+    @Override
+    public UcenterMember handleGithubUser(Map<String, Object> userMap) {
+        QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
+        wrapper.eq("openid", userMap.get("node_id"));
+        UcenterMember member = super.getOne(wrapper);
+        if (member == null) {
+            member = new UcenterMember();
+            member.setNickname((String) userMap.get("login"));
+            member.setOpenid((String) userMap.get("node_id"));
+            member.setAvatar((String) userMap.get("avatar_url"));
+            member.setEmail("Null:" + RandomUtil.randomString(15));
+            super.save(member);
+        }
         return member;
     }
 }
