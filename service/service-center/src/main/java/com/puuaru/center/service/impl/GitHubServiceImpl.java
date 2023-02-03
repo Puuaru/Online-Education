@@ -71,7 +71,7 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
                 .addParam("client_secret", properties.getSecret())
                 .addParam("code", code)
                 .getUrl();
-        String tokenInfo = HttpUtil.get(baseRedirectUrl);
+        String tokenInfo = HttpUtil.get(tokenUrl);
         String accessToken = tokenInfo.split("&")[0].split("=")[1];
         String userString = HttpRequest.get("https://api.github.com/user")
                 .header("Authorization", "token " + accessToken)

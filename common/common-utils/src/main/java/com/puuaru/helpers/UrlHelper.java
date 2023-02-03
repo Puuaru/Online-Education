@@ -24,6 +24,7 @@ public class UrlHelper {
         params.forEach((key, value) -> {
             suffixBuilder.append(key + "=" + value + "&");
         });
+        paramCount += params.size();
         url = suffixBuilder.insert(0, url).toString();
         return this;
     }
@@ -34,6 +35,7 @@ public class UrlHelper {
             suffixBuilder.append("?");
         }
         suffixBuilder.append(key + "=" + value + "&");
+        paramCount++;
         url = suffixBuilder.insert(0, url).toString();
         return this;
     }

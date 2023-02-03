@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/center/github")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class GithubController {
     private final GithubService githubService;
 
@@ -40,5 +40,10 @@ public class GithubController {
     public String callback(String code) {
         String redirectUrl = githubService.callbackHandler(code);
         return "redirect:" + redirectUrl;
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Hello";
     }
 }
