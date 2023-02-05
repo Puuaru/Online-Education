@@ -8,7 +8,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * @Description: CourseFrontInfo
+ * @Description: CourseFrontInfo, 前台课程查询的分类条件信息
  * @Author: puuaru
  * @Date: 2023/2/5
  */
@@ -23,10 +23,10 @@ public class CourseFrontInfo {
     private Long subjectParentId;
 
     @ApiModelProperty(value = "价格排序")
-    private BigDecimal priceSort;
+    private String priceSort;
 
     @ApiModelProperty(value = "销售数量排序")
-    private Long buyCountSort;
+    private String buyCountSort;
 
     @ApiModelProperty(value = "创建时间排序")
     private String gmtCreateSort;

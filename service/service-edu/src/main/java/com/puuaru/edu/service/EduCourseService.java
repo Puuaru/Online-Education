@@ -1,6 +1,5 @@
 package com.puuaru.edu.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.puuaru.edu.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puuaru.edu.vo.CourseFrontInfo;
@@ -85,5 +84,5 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param limit
      * @return
      */
-    Page<EduCourse> getCoursePageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo);
+    Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo);
 }

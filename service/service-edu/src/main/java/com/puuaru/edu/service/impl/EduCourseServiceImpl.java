@@ -155,7 +155,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public Map<String, Object> getCoursePageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo) {
+    public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo) {
         Page<EduCourse> page = new Page<>();
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(courseFrontInfo.getSubjectParentId())) {
@@ -168,7 +168,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
         if (!ObjectUtils.isEmpty(courseFrontInfo.getPriceSort())) {
             // 价格排序
-            wrapper.orderByDesc("price");
+            wrapper.orderByAsc("price");
         }
         if (!ObjectUtils.isEmpty(courseFrontInfo.getBuyCountSort())) {
             // 购买排序
