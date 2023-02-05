@@ -5,26 +5,24 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.edu.entity.EduCourse;
 import com.puuaru.edu.entity.EduCourseDescription;
-import com.puuaru.edu.entity.EduVideo;
-import com.puuaru.edu.mapper.EduChapterMapper;
 import com.puuaru.edu.mapper.EduCourseMapper;
-import com.puuaru.edu.mapper.EduVideoMapper;
 import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseDescriptionService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.service.EduVideoService;
+import com.puuaru.edu.vo.CourseFrontInfo;
 import com.puuaru.edu.vo.CourseInfo;
 import com.puuaru.edu.vo.CoursePublishInfo;
 import com.puuaru.edu.vo.CourseQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -50,12 +48,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         this.chapterService = chapterService;
     }
 
-    /**
-     * 根据课程信息VO类添加课程信息
-     *
-     * @param courseInfo
-     * @return
-     */
     @Override
     public String saveCourseInfo(CourseInfo courseInfo) {
         EduCourse course = new EduCourse();
@@ -152,6 +144,43 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         videoService.removeVideosByCourseId(courseId);
 
         return result;
+    }
+
+    @Override
+    public List<EduCourse> getListByTeacherId(Long teacherId) {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id", teacherId);
+        List<EduCourse> courses = super.list(wrapper);
+        return courses;
+    }
+
+    @Override
+    public Map<String, Object> getCoursePageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo) {
+        Page<EduCourse> page = new Page<>();
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        if (!ObjectUtils.isEmpty(courseFrontInfo.getSubjectParentId())) {
+            // 一级分类
+            wrapper.eq("subject_parent_id", courseFrontInfo.getSubjectParentId());
+            if (!ObjectUtils.isEmpty(courseFrontInfo.getSubjectId())) {
+                // 二级分类
+                wrapper.eq("subject_id", courseFrontInfo.getSubjectId());
+            }
+        }
+        if (!ObjectUtils.isEmpty(courseFrontInfo.getPriceSort())) {
+            // 价格排序
+            wrapper.orderByDesc("price");
+        }
+        if (!ObjectUtils.isEmpty(courseFrontInfo.getBuyCountSort())) {
+            // 购买排序
+            wrapper.orderByDesc("buy_count");
+        }
+        if (!ObjectUtils.isEmpty(courseFrontInfo.getGmtCreateSort())) {
+            // 创建时间排序
+            wrapper.orderByDesc("gmt_create");
+        }
+        Page<EduCourse> pageResult = super.page(page, wrapper);
+
+        return getPageResult(pageResult);
     }
 
     private Map<String, Object> getPageResult(Page<EduCourse> coursePage) {
