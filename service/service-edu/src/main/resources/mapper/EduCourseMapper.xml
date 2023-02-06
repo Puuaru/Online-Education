@@ -10,6 +10,31 @@
                  left join edu_subject es1 on ec.subject_parent_id = es1.id
                  left join edu_subject es2 on ec.subject_id = es2.id
                  left join edu_teacher et on ec.teacher_id = et.id
+        where ec.id = #{id} and ec.is_deleted = 0
+    </select>
+    <select id="getCourseFrontInfo" resultType="com.puuaru.edu.vo.CourseFrontInfo">
+        select ec.id,
+               ec.title,
+               ec.cover,
+               ec.lesson_num,
+               ec.price,
+               ec.buy_count,
+               ec.view_count,
+               ec.subject_id,
+               ec.subject_parent_id,
+               ecd.description,
+               es1.title as subjectTitle,
+               es2.title as subjectParentTitle,
+               et.id     as teacherId,
+               et.name   as teacherName,
+               et.avatar as teacherAvatar,
+               et.intro  as teacherIntro
+        from edu_course ec
+                 left join edu_subject es1 on ec.subject_parent_id = es1.id
+                 left join edu_subject es2 on ec.subject_id = es2.id
+                 left join edu_teacher et on ec.teacher_id = et.id
+                 left join edu_course_description ecd on ec.id = ecd.id
         where ec.id = #{id}
+          and ec.is_deleted = 0
     </select>
 </mapper>

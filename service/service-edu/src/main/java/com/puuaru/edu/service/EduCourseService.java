@@ -2,10 +2,7 @@ package com.puuaru.edu.service;
 
 import com.puuaru.edu.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.puuaru.edu.vo.CourseFrontInfo;
-import com.puuaru.edu.vo.CourseInfo;
-import com.puuaru.edu.vo.CoursePublishInfo;
-import com.puuaru.edu.vo.CourseQuery;
+import com.puuaru.edu.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -84,5 +81,12 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param limit
      * @return
      */
-    Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo);
+    Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontQuery courseFrontQuery);
+
+    /**
+     * 前台系统查询课程详细信息
+     * @param id
+     * @return
+     */
+    CourseFrontInfo getCourseFrontInfo(Long id);
 }

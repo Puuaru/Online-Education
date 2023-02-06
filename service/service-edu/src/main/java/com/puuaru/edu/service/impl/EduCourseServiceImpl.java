@@ -10,10 +10,7 @@ import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseDescriptionService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.service.EduVideoService;
-import com.puuaru.edu.vo.CourseFrontInfo;
-import com.puuaru.edu.vo.CourseInfo;
-import com.puuaru.edu.vo.CoursePublishInfo;
-import com.puuaru.edu.vo.CourseQuery;
+import com.puuaru.edu.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,11 +38,14 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     private final EduChapterService chapterService;
 
+    private final EduCourseMapper courseMapper;
+
     @Autowired
-    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoService videoService, EduChapterService chapterService) {
+    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoService videoService, EduChapterService chapterService, EduCourseMapper courseMapper) {
         this.courseDescriptionService = courseDescriptionService;
         this.videoService = videoService;
         this.chapterService = chapterService;
+        this.courseMapper = courseMapper;
     }
 
     @Override
@@ -155,32 +155,38 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontInfo courseFrontInfo) {
+    public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontQuery courseFrontQuery) {
         Page<EduCourse> page = new Page<>();
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
-        if (!ObjectUtils.isEmpty(courseFrontInfo.getSubjectParentId())) {
+        if (!ObjectUtils.isEmpty(courseFrontQuery.getSubjectParentId())) {
             // 一级分类
-            wrapper.eq("subject_parent_id", courseFrontInfo.getSubjectParentId());
-            if (!ObjectUtils.isEmpty(courseFrontInfo.getSubjectId())) {
+            wrapper.eq("subject_parent_id", courseFrontQuery.getSubjectParentId());
+            if (!ObjectUtils.isEmpty(courseFrontQuery.getSubjectId())) {
                 // 二级分类
-                wrapper.eq("subject_id", courseFrontInfo.getSubjectId());
+                wrapper.eq("subject_id", courseFrontQuery.getSubjectId());
             }
         }
-        if (!ObjectUtils.isEmpty(courseFrontInfo.getPriceSort())) {
+        if (!ObjectUtils.isEmpty(courseFrontQuery.getPriceSort())) {
             // 价格排序
             wrapper.orderByAsc("price");
         }
-        if (!ObjectUtils.isEmpty(courseFrontInfo.getBuyCountSort())) {
+        if (!ObjectUtils.isEmpty(courseFrontQuery.getBuyCountSort())) {
             // 购买排序
             wrapper.orderByDesc("buy_count");
         }
-        if (!ObjectUtils.isEmpty(courseFrontInfo.getGmtCreateSort())) {
+        if (!ObjectUtils.isEmpty(courseFrontQuery.getGmtCreateSort())) {
             // 创建时间排序
             wrapper.orderByDesc("gmt_create");
         }
         Page<EduCourse> pageResult = super.page(page, wrapper);
 
         return getPageResult(pageResult);
+    }
+
+    @Override
+    public CourseFrontInfo getCourseFrontInfo(Long id) {
+        CourseFrontInfo result = courseMapper.getCourseFrontInfo(id);
+        return result;
     }
 
     private Map<String, Object> getPageResult(Page<EduCourse> coursePage) {
