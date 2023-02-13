@@ -28,4 +28,7 @@ public class CourseFrontQuery {
 
     @ApiModelProperty(value = "创建时间排序")
     private String gmtCreateSort;
+
+    @ApiModelProperty(value = "用于模糊查询课程名称")
+    private String courseName;
 }

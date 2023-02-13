@@ -4,6 +4,7 @@ import com.puuaru.edu.entity.EduCourse;
 import com.puuaru.edu.entity.EduTeacher;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.service.EduTeacherService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,13 @@ public class FrontTeacherController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/detail/{id}")
+    /**
+     * 获取讲师详情
+     * @param teacherId
+     * @return
+     */
+    @GetMapping("/details/{id}")
+    @ApiOperation("获取讲师详情")
     public Map<String, Object> getTeacherDetail(@PathVariable("id") Long teacherId) {
         HashMap<String, Object> result = new HashMap<>();
         EduTeacher teacherInfo = teacherService.getById(teacherId);

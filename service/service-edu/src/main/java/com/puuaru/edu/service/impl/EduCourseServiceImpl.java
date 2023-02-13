@@ -178,6 +178,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             // 创建时间排序
             wrapper.orderByDesc("gmt_create");
         }
+        if (!ObjectUtils.isEmpty(courseFrontQuery.getCourseName())) {
+            // 模糊查找课程名
+            wrapper.like("title", courseFrontQuery.getCourseName());
+        }
         Page<EduCourse> pageResult = super.page(page, wrapper);
 
         return getPageResult(pageResult);
