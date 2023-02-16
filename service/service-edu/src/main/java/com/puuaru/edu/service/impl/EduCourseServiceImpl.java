@@ -156,7 +156,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Override
     public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontQuery courseFrontQuery) {
-        Page<EduCourse> page = new Page<>();
+        Page<EduCourse> page = new Page<>(current, limit);
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(courseFrontQuery.getSubjectParentId())) {
             // 一级分类
@@ -168,10 +168,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
         if (!ObjectUtils.isEmpty(courseFrontQuery.getPriceSort())) {
             // 价格排序
-            wrapper.orderByAsc("price");
+            if (courseFrontQuery.getPriceSort().equals("asc"))
+                wrapper.orderByAsc("price");
+            else if (courseFrontQuery.getPriceSort().equals("desc"))
+                wrapper.orderByDesc("price");
         }
         if (!ObjectUtils.isEmpty(courseFrontQuery.getBuyCountSort())) {
-            // 购买排序
+            // 销量排序
             wrapper.orderByDesc("buy_count");
         }
         if (!ObjectUtils.isEmpty(courseFrontQuery.getGmtCreateSort())) {

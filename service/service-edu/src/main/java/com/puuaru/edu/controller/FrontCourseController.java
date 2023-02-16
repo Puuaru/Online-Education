@@ -3,6 +3,7 @@ package com.puuaru.edu.controller;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.CourseFrontInfo;
 import com.puuaru.edu.vo.CourseFrontQuery;
+import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +33,11 @@ public class FrontCourseController {
      */
     @PostMapping("/condition/{current}/{limit}")
     @ApiOperation("根据分类或排序条件分页查询课程")
-    public Map<String, Object> getCoursesPageByCondition(@PathVariable("current") long current,
-                                                     @PathVariable("limit") long limit,
-                                                     @RequestBody CourseFrontQuery courseFrontQuery) {
+    public ResultCommon getCoursesPageByCondition(@PathVariable("current") long current,
+                                                  @PathVariable("limit") long limit,
+                                                  @RequestBody CourseFrontQuery courseFrontQuery) {
         Map<String, Object> result = courseService.getCoursesPageByCondition(current, limit, courseFrontQuery);
-        return result;
+        return ResultCommon.success().setData(result);
     }
 
     /**
