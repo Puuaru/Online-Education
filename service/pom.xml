@@ -17,6 +17,7 @@
         <module>service-vod</module>
         <module>service-cms</module>
         <module>service-center</module>
+        <module>service-order</module>
     </modules>
 
     <properties>
