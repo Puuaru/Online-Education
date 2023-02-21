@@ -56,7 +56,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
      * @return
      */
     @Override
-    public List<ChapterVO> getCourseDetails(Long courseId) {
+    public List<ChapterVO> getCourseChapter(Long courseId) {
         QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", courseId);
         List<EduChapter> chapters = super.list(wrapper);
@@ -64,7 +64,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         chapters.sort(Comparator.comparing(EduChapter::getSort));
 
         return chapters.stream()
-                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
+                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null, null, null))
                 .peek(item -> {
                     List<EduVideo> videoList = getChildVideoList(item);
                     item.setChildren(getVideoList(videoList));
@@ -97,7 +97,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     private List<ChapterVO> getVideoList(List<EduVideo> videos) {
         return videos.stream()
                 // 将Video实体类转换为ChapterVO类时会存放关于Video的更多信息
-                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null))
+                .map(item -> new ChapterVO(item.getId(), item.getTitle(), null, item.getVideoSourceId(), item.getIsFree()))
                 .peek(item -> {
                     // 查询每个视频是否有分p
                     List<EduVideo> subVideoList = getChildVideoList(item);

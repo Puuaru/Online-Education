@@ -1,0 +1,19 @@
+server:
+  port: 8006
+spring:
+  application:
+    name: service-order
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        server-addr: localhost:8848
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.yml
+            refresh: true
+          - data-id: sentinel-feign.yml
+            refresh: true

@@ -21,4 +21,8 @@ public class ChapterVO {
     Long id;
     String title;
     List<ChapterVO> children;   // 用以表示：1. 章节下的小节视频 2. 小节可能会有的更小小节
+
+    String VideoSourceId;
+
+    Integer isFree;
 }

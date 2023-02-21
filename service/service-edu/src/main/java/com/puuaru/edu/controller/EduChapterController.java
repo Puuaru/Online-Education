@@ -38,7 +38,7 @@ public class EduChapterController {
     @GetMapping("/details/{id}")
     @ApiOperation("根据课程id获取某课程的章节和视频（小节）数据")
     public List<ChapterVO> getCourseDetails(@PathVariable("id") Long courseId) {
-        List<ChapterVO> courseDetails = chapterService.getCourseDetails(courseId);
+        List<ChapterVO> courseDetails = chapterService.getCourseChapter(courseId);
         return courseDetails;
     }
 

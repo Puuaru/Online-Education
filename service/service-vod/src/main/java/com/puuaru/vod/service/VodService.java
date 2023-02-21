@@ -17,10 +17,19 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStream;
 
 @Service
 public class VodService extends ServiceImpl<VodMapper, VodProperties> {
+
+    private VodProperties properties;
+
+    @PostConstruct
+    private void init() {
+        this.properties = getProperties();
+    }
+
     @SneakyThrows
     private VodProperties getProperties() {
         QueryWrapper wrapper = new QueryWrapper<>();
@@ -31,7 +40,6 @@ public class VodService extends ServiceImpl<VodMapper, VodProperties> {
 
     @SneakyThrows
     public String uploadVideo(MultipartFile video) {
-        VodProperties properties = getProperties();
         String fileName = video.getOriginalFilename();
         String title = fileName.substring(0, fileName.lastIndexOf("."));
         InputStream inputStream = video.getInputStream();
@@ -48,7 +56,6 @@ public class VodService extends ServiceImpl<VodMapper, VodProperties> {
 
     @SneakyThrows
     public Boolean deleteSourceVideo(String videoId) {
-        VodProperties properties = getProperties();
         DefaultAcsClient client = InitClient.initClient(properties.getAccessKeyId(), properties.getAccessKeySecret());
         DeleteVideoRequest request = new DeleteVideoRequest();
         request.setVideoIds(videoId);
@@ -61,7 +68,6 @@ public class VodService extends ServiceImpl<VodMapper, VodProperties> {
 
     @SneakyThrows
     public String getPlayAuth(String videoId) {
-        VodProperties properties = getProperties();
         DefaultAcsClient client = InitClient.initClient(properties.getAccessKeyId(), properties.getAccessKeySecret());
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
         GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();

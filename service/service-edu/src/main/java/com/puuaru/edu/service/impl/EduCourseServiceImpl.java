@@ -5,26 +5,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.edu.entity.EduCourse;
 import com.puuaru.edu.entity.EduCourseDescription;
-import com.puuaru.edu.entity.EduVideo;
-import com.puuaru.edu.mapper.EduChapterMapper;
 import com.puuaru.edu.mapper.EduCourseMapper;
-import com.puuaru.edu.mapper.EduVideoMapper;
 import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseDescriptionService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.service.EduVideoService;
-import com.puuaru.edu.vo.CourseInfo;
-import com.puuaru.edu.vo.CoursePublishInfo;
-import com.puuaru.edu.vo.CourseQuery;
+import com.puuaru.edu.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -43,19 +38,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     private final EduChapterService chapterService;
 
+    private final EduCourseMapper courseMapper;
+
     @Autowired
-    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoService videoService, EduChapterService chapterService) {
+    public EduCourseServiceImpl(EduCourseDescriptionService courseDescriptionService, EduVideoService videoService, EduChapterService chapterService, EduCourseMapper courseMapper) {
         this.courseDescriptionService = courseDescriptionService;
         this.videoService = videoService;
         this.chapterService = chapterService;
+        this.courseMapper = courseMapper;
     }
 
-    /**
-     * 根据课程信息VO类添加课程信息
-     *
-     * @param courseInfo
-     * @return
-     */
     @Override
     public String saveCourseInfo(CourseInfo courseInfo) {
         EduCourse course = new EduCourse();
@@ -151,6 +143,62 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         chapterService.remove(chapterWrapper);
         videoService.removeVideosByCourseId(courseId);
 
+        return result;
+    }
+
+    @Override
+    public List<EduCourse> getListByTeacherId(Long teacherId) {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id", teacherId);
+        List<EduCourse> courses = super.list(wrapper);
+        return courses;
+    }
+
+    @Override
+    public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontQuery courseFrontQuery) {
+        Page<EduCourse> page = new Page<>(current, limit);
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        Long subjectParentId = courseFrontQuery.getSubjectParentId();
+        Long subjectId = courseFrontQuery.getSubjectId();
+        String priceSort = courseFrontQuery.getPriceSort();
+        String buyCountSort = courseFrontQuery.getBuyCountSort();
+        String gmtCreateSort = courseFrontQuery.getGmtCreateSort();
+        String courseName = courseFrontQuery.getCourseName();
+        if (!ObjectUtils.isEmpty(subjectParentId)) {
+            // 一级分类
+            wrapper.eq("subject_parent_id", subjectParentId);
+            if (!ObjectUtils.isEmpty(subjectId)) {
+                // 二级分类
+                wrapper.eq("subject_id", subjectId);
+            }
+        }
+        if (!ObjectUtils.isEmpty(priceSort)) {
+            // 价格排序
+            if (priceSort.equals("asc"))
+                wrapper.orderByAsc("price");
+            else if (priceSort.equals("desc"))
+                wrapper.orderByDesc("price");
+        }
+        if (!ObjectUtils.isEmpty(buyCountSort)) {
+            // 销量排序
+            wrapper.orderByDesc("buy_count");
+        }
+        if (!ObjectUtils.isEmpty(gmtCreateSort)) {
+            // 创建时间排序
+            wrapper.orderByDesc("gmt_create");
+        }
+        if (!ObjectUtils.isEmpty(courseName)) {
+            // 模糊查找课程名
+            wrapper.like("title", courseName);
+        }
+        Page<EduCourse> pageResult = super.page(page, wrapper);
+
+        return getPageResult(pageResult);
+    }
+
+    @Override
+    public CourseFrontInfo getCourseFrontInfo(Long id) {
+        CourseFrontInfo result = courseMapper.getCourseFrontInfo(id);
         return result;
     }
 
