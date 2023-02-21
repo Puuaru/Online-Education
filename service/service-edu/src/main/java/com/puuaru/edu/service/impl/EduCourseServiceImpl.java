@@ -158,32 +158,38 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public Map<String, Object> getCoursesPageByCondition(long current, long limit, CourseFrontQuery courseFrontQuery) {
         Page<EduCourse> page = new Page<>(current, limit);
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
-        if (!ObjectUtils.isEmpty(courseFrontQuery.getSubjectParentId())) {
+        Long subjectParentId = courseFrontQuery.getSubjectParentId();
+        Long subjectId = courseFrontQuery.getSubjectId();
+        String priceSort = courseFrontQuery.getPriceSort();
+        String buyCountSort = courseFrontQuery.getBuyCountSort();
+        String gmtCreateSort = courseFrontQuery.getGmtCreateSort();
+        String courseName = courseFrontQuery.getCourseName();
+        if (!ObjectUtils.isEmpty(subjectParentId)) {
             // 一级分类
-            wrapper.eq("subject_parent_id", courseFrontQuery.getSubjectParentId());
-            if (!ObjectUtils.isEmpty(courseFrontQuery.getSubjectId())) {
+            wrapper.eq("subject_parent_id", subjectParentId);
+            if (!ObjectUtils.isEmpty(subjectId)) {
                 // 二级分类
-                wrapper.eq("subject_id", courseFrontQuery.getSubjectId());
+                wrapper.eq("subject_id", subjectId);
             }
         }
-        if (!ObjectUtils.isEmpty(courseFrontQuery.getPriceSort())) {
+        if (!ObjectUtils.isEmpty(priceSort)) {
             // 价格排序
-            if (courseFrontQuery.getPriceSort().equals("asc"))
+            if (priceSort.equals("asc"))
                 wrapper.orderByAsc("price");
-            else if (courseFrontQuery.getPriceSort().equals("desc"))
+            else if (priceSort.equals("desc"))
                 wrapper.orderByDesc("price");
         }
-        if (!ObjectUtils.isEmpty(courseFrontQuery.getBuyCountSort())) {
+        if (!ObjectUtils.isEmpty(buyCountSort)) {
             // 销量排序
             wrapper.orderByDesc("buy_count");
         }
-        if (!ObjectUtils.isEmpty(courseFrontQuery.getGmtCreateSort())) {
+        if (!ObjectUtils.isEmpty(gmtCreateSort)) {
             // 创建时间排序
             wrapper.orderByDesc("gmt_create");
         }
-        if (!ObjectUtils.isEmpty(courseFrontQuery.getCourseName())) {
+        if (!ObjectUtils.isEmpty(courseName)) {
             // 模糊查找课程名
-            wrapper.like("title", courseFrontQuery.getCourseName());
+            wrapper.like("title", courseName);
         }
         Page<EduCourse> pageResult = super.page(page, wrapper);
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -27,13 +28,17 @@ public class OssServiceImpl extends ServiceImpl<PropertiesMapper, OssProperties>
 
     @Value("${oss.resource}")
     private String ossResource;
+    private OssProperties properties;
+
+    @PostConstruct
+    private void init() {
+        QueryWrapper<OssProperties> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", ossResource);
+        this.properties = super.getOne(wrapper);
+    }
 
     @Override
     public String uploadFile(MultipartFile file) {
-        QueryWrapper<OssProperties> wrapper = new QueryWrapper<>();
-        wrapper.eq("name", ossResource);
-        OssProperties properties = super.getOne(wrapper);
-
         String accessKeyId = properties.getKeyId();
         String accessKeySecret = properties.getKeySecret();
         String endpoint = properties.getEndpoint();

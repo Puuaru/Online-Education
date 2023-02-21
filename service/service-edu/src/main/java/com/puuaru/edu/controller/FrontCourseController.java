@@ -8,6 +8,7 @@ import com.puuaru.edu.vo.CourseFrontQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -55,10 +56,11 @@ public class FrontCourseController {
      */
     @GetMapping("/details/{id}")
     @ApiOperation("查询课程详细信息")
+    @Cacheable(value = "courseDetails", key = "#id")
     public ResultCommon getCourseFrontInfo(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
         CourseFrontInfo details = courseService.getCourseFrontInfo(id);
-        List<ChapterVO> chapters = chapterService.getCourseDetails(id);
+        List<ChapterVO> chapters = chapterService.getCourseChapter(id);
         result.put("details", details);
         result.put("chapters", chapters);
         return ResultCommon.success().setData(result);
