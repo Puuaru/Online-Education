@@ -63,6 +63,22 @@ public class UcenterMemberController {
     }
 
     /**
+     * Feign接口，根据id获取用户信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/memberInfo/{id}")
+    @ApiOperation("Feign接口，根据id获取用户信息")
+    public UcenterMember getMemberInfo(@PathVariable("id") Long id) {
+        UcenterMember memberInfo = memberService.getById(id);
+        if (memberInfo == null) {
+            return null;
+        }
+        memberInfo.setPassword(null);
+        return memberInfo;
+    }
+
+    /**
      * 注册新账户
      *
      * @param registerVo

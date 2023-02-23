@@ -2,7 +2,7 @@ package com.puuaru.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.puuaru")
-@EnableDiscoveryClient
+@EnableFeignClients
 public class OrderServiceMain8006 {
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceMain8006.class, args);

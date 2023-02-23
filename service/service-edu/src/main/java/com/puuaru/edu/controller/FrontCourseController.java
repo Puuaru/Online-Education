@@ -65,4 +65,12 @@ public class FrontCourseController {
         result.put("chapters", chapters);
         return ResultCommon.success().setData(result);
     }
+
+    @GetMapping("/feign/{id}")
+    @ApiOperation("查询课程详细信息")
+    @Cacheable(value = "courseDetails", key = "#id")
+    public CourseFrontInfo getCourseFrontInfoForFeign(@PathVariable("id") Long id) {
+        CourseFrontInfo details = courseService.getCourseFrontInfo(id);
+        return details;
+    }
 }
