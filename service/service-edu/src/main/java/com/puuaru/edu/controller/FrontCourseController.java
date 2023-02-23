@@ -3,7 +3,7 @@ package com.puuaru.edu.controller;
 import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.ChapterVO;
-import com.puuaru.edu.vo.CourseFrontInfo;
+import com.puuaru.servicebase.vo.CourseFrontInfo;
 import com.puuaru.edu.vo.CourseFrontQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;

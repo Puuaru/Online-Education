@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.entity.ThreePartyProperties;
-import com.puuaru.center.entity.UcenterMember;
+import com.puuaru.servicebase.entity.UcenterMember;
 import com.puuaru.center.mapper.ThreePartyPropertiesMapper;
 import com.puuaru.center.service.GithubService;
 import com.puuaru.center.service.UcenterMemberService;

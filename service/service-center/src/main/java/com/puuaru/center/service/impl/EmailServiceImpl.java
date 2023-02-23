@@ -3,7 +3,7 @@ package com.puuaru.center.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.puuaru.center.entity.UcenterMember;
+import com.puuaru.servicebase.entity.UcenterMember;
 import com.puuaru.center.mapper.ThreePartyPropertiesMapper;
 import com.puuaru.center.service.EmailService;
 import com.puuaru.center.service.UcenterMemberService;

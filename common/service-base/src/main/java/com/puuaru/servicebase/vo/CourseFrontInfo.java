@@ -1,4 +1,4 @@
-package com.puuaru.edu.vo;
+package com.puuaru.servicebase.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -1,7 +1,7 @@
 package com.puuaru.center.controller;
 
 
-import com.puuaru.center.entity.UcenterMember;
+import com.puuaru.servicebase.entity.UcenterMember;
 import com.puuaru.center.service.UcenterMemberService;
 import com.puuaru.center.vo.MemberRegisterVo;
 import com.puuaru.utils.JwtUtils;

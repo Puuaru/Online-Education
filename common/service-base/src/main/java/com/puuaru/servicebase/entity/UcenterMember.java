@@ -1,4 +1,4 @@
-package com.puuaru.center.entity;
+package com.puuaru.servicebase.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

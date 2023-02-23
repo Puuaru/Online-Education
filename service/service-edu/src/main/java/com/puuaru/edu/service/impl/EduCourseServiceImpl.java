@@ -11,6 +11,7 @@ import com.puuaru.edu.service.EduCourseDescriptionService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.service.EduVideoService;
 import com.puuaru.edu.vo.*;
+import com.puuaru.servicebase.vo.CourseFrontInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,9 +50,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public String saveCourseInfo(CourseInfo courseInfo) {
+    public String saveCourseInfo(CourseBackInfo courseBackInfo) {
         EduCourse course = new EduCourse();
-        BeanUtils.copyProperties(courseInfo, course);
+        BeanUtils.copyProperties(courseBackInfo, course);
         boolean result = this.save(course);
         if (!result) {
             throw new RuntimeException("添加课程信息失败");
@@ -59,7 +60,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         Long courseId = course.getId();
         EduCourseDescription courseDescription = new EduCourseDescription();
-        courseDescription.setDescription(courseInfo.getDescription());
+        courseDescription.setDescription(courseBackInfo.getDescription());
         courseDescription.setId(courseId);
         result = courseDescriptionService.save(courseDescription);
         if (!result) {
@@ -70,29 +71,29 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public CourseInfo getCourseInfo(Long id) {
-        CourseInfo courseInfo = new CourseInfo();
+    public CourseBackInfo getCourseInfo(Long id) {
+        CourseBackInfo courseBackInfo = new CourseBackInfo();
         EduCourse course = super.getById(id);
         EduCourseDescription courseDescription = courseDescriptionService.getById(id);
 
         if (course != null) {
-            BeanUtils.copyProperties(course, courseInfo);
+            BeanUtils.copyProperties(course, courseBackInfo);
         }
         if (courseDescription != null) {
-            BeanUtils.copyProperties(courseDescription, courseInfo);
+            BeanUtils.copyProperties(courseDescription, courseBackInfo);
         }
 
-        return courseInfo;
+        return courseBackInfo;
     }
 
     @Override
-    public void updateCourseInfo(CourseInfo courseInfo) {
+    public void updateCourseInfo(CourseBackInfo courseBackInfo) {
         EduCourse course = new EduCourse();
-        BeanUtils.copyProperties(courseInfo, course);
+        BeanUtils.copyProperties(courseBackInfo, course);
         super.updateById(course);
 
         EduCourseDescription courseDescription = new EduCourseDescription();
-        BeanUtils.copyProperties(courseInfo, courseDescription);
+        BeanUtils.copyProperties(courseBackInfo, courseDescription);
         courseDescriptionService.updateById(courseDescription);
     }
 
@@ -112,7 +113,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
-    public Map<String, Object> getPage(long current, long limit, CourseQuery query) {
+    public Map<String, Object> getPage(long current, long limit, CourseBackQuery query) {
         Page<EduCourse> coursePage = new Page<>(current, limit);
         if (query == null) {
             this.page(coursePage);

@@ -2,7 +2,7 @@ package com.puuaru.edu.mapper;
 
 import com.puuaru.edu.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.puuaru.edu.vo.CourseFrontInfo;
+import com.puuaru.servicebase.vo.CourseFrontInfo;
 import com.puuaru.edu.vo.CoursePublishInfo;
 import org.apache.ibatis.annotations.Mapper;
 
