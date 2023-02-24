@@ -7,16 +7,21 @@ import java.util.Map;
  * @Author: puuaru
  * @Date: 2023/2/1
  */
-public class UrlHelper {
+public class UrlUtils {
     private String url;
     private int paramCount;
 
-    public UrlHelper(String baseUrl) {
-        this.url = baseUrl;
-        paramCount = 0;
+    public UrlUtils() {
     }
 
-    public UrlHelper addParams(Map<String, String> params) {
+    public static UrlUtils init(String baseUrl) {
+        UrlUtils urlUtils = new UrlUtils();
+        urlUtils.url = baseUrl;
+        urlUtils.paramCount = 0;
+        return urlUtils;
+    }
+
+    public UrlUtils addParams(Map<String, String> params) {
         StringBuilder suffixBuilder = new StringBuilder();
         if (paramCount < 1) {
             suffixBuilder.append("?");
@@ -29,7 +34,7 @@ public class UrlHelper {
         return this;
     }
 
-    public UrlHelper addParam(String key, String value) {
+    public UrlUtils addParam(String key, String value) {
         StringBuilder suffixBuilder = new StringBuilder();
         if (paramCount < 1) {
             suffixBuilder.append("?");

@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="TOrder对象", description="订单")
+@ApiModel(value="Order对象", description="订单")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
