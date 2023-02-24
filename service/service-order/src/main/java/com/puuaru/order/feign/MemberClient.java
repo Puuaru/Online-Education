@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("service-center")
 public interface MemberClient {
     @GetMapping("/center/member/memberInfo/{id}")
-    ResultCommon getMemberInfo(@PathVariable("id") Long id);
+    ResultCommon getMemberInfo(@PathVariable("id") String id);
 }
