@@ -46,6 +46,13 @@ public class OrderController {
         return ResultCommon.success().setData("orderNo", orderNo);
     }
 
+    /**
+     * 根据订单号查询订单
+     * @param orderNo
+     * @return
+     */
+    @GetMapping("/{orderNo}")
+    @ApiOperation("根据订单号查询订单")
     public Order getOrder(@PathVariable("orderNo") String orderNo) {
         Order order = orderService.getOrderByNo(orderNo);
         return order;

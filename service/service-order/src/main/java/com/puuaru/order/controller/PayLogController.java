@@ -1,6 +1,9 @@
 package com.puuaru.order.controller;
 
 
+import com.puuaru.order.service.PayLogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order/t-pay-log")
 public class PayLogController {
+    private final PayLogService payLogService;
 
+    @Autowired
+    public PayLogController(PayLogService payLogService) {
+        this.payLogService = payLogService;
+    }
+
+    public Boolean savePayLog(@PathVariable("orderNo") String orderNo) {
+        payLogService.savePayLog(orderNo);
+    }
 }
 

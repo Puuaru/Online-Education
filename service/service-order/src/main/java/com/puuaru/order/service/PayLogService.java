@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PayLogService extends IService<PayLog> {
 
+    Boolean savePayLog(String orderNo);
 }
