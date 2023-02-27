@@ -1,6 +1,7 @@
 package com.puuaru.order.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.puuaru.order.entity.Order;
 import com.puuaru.order.entity.PayLog;
 import com.puuaru.order.mapper.PayLogMapper;
@@ -32,6 +33,11 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
     @Override
     public Boolean savePayLog(String orderNo) {
+        QueryWrapper<PayLog> wrapper = new QueryWrapper<>();
+        wrapper.eq("order_no", orderNo);
+        if (super.count(wrapper) > 0) {
+            throw new RuntimeException("订单已支付");
+        }
         Order order = orderService.getOrderByNo(orderNo);
         order.setStatus(1);
         if (!orderService.updateById(order)) {

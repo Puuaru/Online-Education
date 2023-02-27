@@ -27,4 +27,6 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     Order getOrderByNo(String orderNo);
+
+    Boolean isPurchased(Long courseId, String memberId);
 }

@@ -51,7 +51,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setTotalFee(courseInfo.getPrice());
         super.save(order);
 
-        return order.getOrderNo();
+        String orderNo = order.getOrderNo();
+        return orderNo;
     }
 
     @Override
@@ -60,5 +61,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         wrapper.eq("order_no", orderNo);
         Order order = super.getOne(wrapper);
         return order;
+    }
+
+    @Override
+    public Boolean isPurchased(Long courseId, String memberId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId)
+                .eq("member_id", memberId)
+                .eq("status", 1)
+        ;
+        int count = super.count(wrapper);
+        return count > 0;
     }
 }

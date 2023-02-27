@@ -3,10 +3,7 @@ package com.puuaru.order.controller;
 
 import com.puuaru.order.service.PayLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-02-21
  */
 @RestController
-@RequestMapping("/order/t-pay-log")
+@CrossOrigin
+@RequestMapping("/order/pay-log")
 public class PayLogController {
     private final PayLogService payLogService;
 
@@ -26,8 +24,9 @@ public class PayLogController {
         this.payLogService = payLogService;
     }
 
+    @PostMapping("/{orderNo}")
     public Boolean savePayLog(@PathVariable("orderNo") String orderNo) {
-        payLogService.savePayLog(orderNo);
+        return payLogService.savePayLog(orderNo);
     }
 }
 

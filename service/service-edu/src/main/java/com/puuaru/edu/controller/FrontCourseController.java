@@ -68,7 +68,7 @@ public class FrontCourseController {
 
     @GetMapping("/feign/{id}")
     @ApiOperation("查询课程详细信息")
-    @Cacheable(value = "courseDetails", key = "#id")
+    @Cacheable(value = "courseFeign", key = "#id")
     public CourseFrontInfo getCourseFrontInfoForFeign(@PathVariable("id") Long id) {
         CourseFrontInfo details = courseService.getCourseFrontInfo(id);
         return details;

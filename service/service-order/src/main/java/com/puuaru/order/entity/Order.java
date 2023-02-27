@@ -36,6 +36,7 @@ public class Order implements Serializable {
     private String orderNo;
 
     @ApiModelProperty(value = "课程id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     @ApiModelProperty(value = "课程名称")
@@ -48,6 +49,7 @@ public class Order implements Serializable {
     private String teacherName;
 
     @ApiModelProperty(value = "会员id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private String memberId;
 
     @ApiModelProperty(value = "会员昵称")
@@ -69,11 +71,11 @@ public class Order implements Serializable {
     private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
 

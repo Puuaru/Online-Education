@@ -57,4 +57,17 @@ public class OrderController {
         Order order = orderService.getOrderByNo(orderNo);
         return order;
     }
+
+    /**
+     * 根据用户和课程ID查询用户是否已购买课程
+     * @param courseId
+     * @param request
+     * @return
+     */
+    @GetMapping("/isPurchased/{courseId}")
+    @ApiOperation("根据用户和课程ID查询用户是否已购买课程")
+    public Boolean isPurchased(@PathVariable("courseId") Long courseId, HttpServletRequest request) {
+        String memberId = JwtUtils.getMemberIdByJwt(request);
+        return orderService.isPurchased(courseId, memberId);
+    }
 }
