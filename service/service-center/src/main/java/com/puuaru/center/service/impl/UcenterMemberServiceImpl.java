@@ -106,9 +106,14 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             member.setNickname((String) userMap.get("login"));
             member.setOpenid((String) userMap.get("node_id"));
             member.setAvatar((String) userMap.get("avatar_url"));
-            member.setEmail("Null:" + RandomUtil.randomString(15));
+            member.setEmail("Null: " + RandomUtil.randomString(15));
             super.save(member);
         }
         return member;
+    }
+
+    @Override
+    public Integer statRegister(String date) {
+        return baseMapper.statRegister(date);
     }
 }

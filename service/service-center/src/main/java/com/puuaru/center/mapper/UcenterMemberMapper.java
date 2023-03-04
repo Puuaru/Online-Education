@@ -14,5 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UcenterMemberMapper extends BaseMapper<UcenterMember> {
-
+    int statRegister(String date);
 }

@@ -20,4 +20,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     UcenterMember register(MemberRegisterVo registerVo);
 
     UcenterMember handleGithubUser(Map<String, Object> userMap);
+
+    Integer statRegister(String date);
 }

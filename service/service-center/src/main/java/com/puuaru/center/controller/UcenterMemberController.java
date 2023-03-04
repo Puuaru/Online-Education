@@ -6,6 +6,7 @@ import com.puuaru.center.service.UcenterMemberService;
 import com.puuaru.center.vo.MemberRegisterVo;
 import com.puuaru.utils.JwtUtils;
 import com.puuaru.utils.ResultCommon;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +90,17 @@ public class UcenterMemberController {
     public UcenterMember register(@RequestBody MemberRegisterVo registerVo) {
         UcenterMember createdMember = memberService.register(registerVo);
         return createdMember;
+    }
+
+    /**
+     * 统计某日的注册人数
+     * @param date 日期字符串，格式应为 yyyy-MM-dd
+     * @return
+     */
+    @GetMapping("/stat/{date}")
+    @ApiOperation("统计某日的注册人数，日期字符串格式应为yyyy-MM-dd")
+    public Integer statRegister(@PathVariable("date") String date) {
+        return memberService.statRegister(date);
     }
 }
 

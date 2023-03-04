@@ -36,8 +36,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public String saveOrder(Long courseId, String memberId) {
-        CourseFrontInfo courseInfo = FeignUtils.parseResult(courseClient.getCourseFrontInfo(courseId), "items", CourseFrontInfo.class);
-        UcenterMember memberInfo = FeignUtils.parseResult(memberClient.getMemberInfo(memberId), "items", UcenterMember.class);
+        CourseFrontInfo courseInfo = FeignUtils.parseResult(courseClient.getCourseFrontInfo(courseId), CourseFrontInfo.class);
+        UcenterMember memberInfo = FeignUtils.parseResult(memberClient.getMemberInfo(memberId), UcenterMember.class);
         Order order = new Order();
 
         order.setOrderNo(UuidUtils.generateUuid());
