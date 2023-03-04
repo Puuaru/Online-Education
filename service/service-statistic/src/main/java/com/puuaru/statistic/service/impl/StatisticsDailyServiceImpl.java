@@ -31,7 +31,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
     }
 
     @Override
-    public void initDateStatisticsData(String date) {
+    public Boolean initDateStatisticsData(String date) {
         ResultCommon respond = ucenterClient.statRegister(date);
         Integer registerNum = FeignUtils.parseResult(respond, Integer.class);
         StatisticsDaily statisticsDaily = new StatisticsDaily();
@@ -46,6 +46,6 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
         wrapper.eq("date_calculated", date);
         super.remove(wrapper);
-        super.save(statisticsDaily);
+        return super.save(statisticsDaily);
     }
 }
