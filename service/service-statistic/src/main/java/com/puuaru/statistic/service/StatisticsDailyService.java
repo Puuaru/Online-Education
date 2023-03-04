@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-03-03
  */
 public interface StatisticsDailyService extends IService<StatisticsDaily> {
-
+    void initDateStatisticsData(String date);
 }
