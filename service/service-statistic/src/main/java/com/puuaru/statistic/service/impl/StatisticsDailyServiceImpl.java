@@ -2,15 +2,21 @@ package com.puuaru.statistic.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.statistic.Feign.UcenterClient;
 import com.puuaru.statistic.entity.StatisticsDaily;
 import com.puuaru.statistic.mapper.StatisticsDailyMapper;
 import com.puuaru.statistic.service.StatisticsDailyService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.utils.FeignUtils;
 import com.puuaru.utils.ResultCommon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -47,5 +53,33 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         wrapper.eq("date_calculated", date);
         super.remove(wrapper);
         return super.save(statisticsDaily);
+    }
+
+    @Override
+    public Map<String, Object> showData(String type, String begin, String end) {
+        QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
+        Map<String, Object> map = new HashMap<>();
+        if (!ObjectUtils.isEmpty(begin)) {
+            wrapper.ge("date_calculated", begin);
+        }
+        if (!ObjectUtils.isEmpty(end)) {
+            wrapper.le("date_calculated", end);
+        }
+        wrapper.select(type, "date_calculated");
+        List<StatisticsDaily> list = super.list(wrapper);
+        //map.put("test", list);
+        List<String> xData = list.stream().map(StatisticsDaily::getDateCalculated).collect(Collectors.toList());
+        List<Integer> yData = list.stream()
+                .map((item) -> switch (type) {
+                            case "register_num" -> item.getRegisterNum();
+                            case "login_num" -> item.getLoginNum();
+                            case "video_view_num" -> item.getVideoViewNum();
+                            case "course_num" -> item.getCourseNum();
+                            default -> null;
+                        }
+                ).collect(Collectors.toList());
+        map.put("dateList", xData);
+        map.put("countList", yData);
+        return map;
     }
 }

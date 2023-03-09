@@ -1,6 +1,7 @@
 package com.puuaru.statistic.controller;
 
 
+import com.puuaru.statistic.entity.StatisticsDaily;
 import com.puuaru.statistic.service.StatisticsDailyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -39,6 +42,11 @@ public class StatisticsDailyController {
     @ApiOperation("根据日期获取统计信息，当前环境下为初始化统计信息")
     public Boolean getStatisticDataByDate(@PathVariable("date") String date) {
         return statisticsDailyService.initDateStatisticsData(date);
+    }
+
+    @GetMapping("/{type}/{begin}/{end}")
+    public Map<String, Object> showData(@PathVariable("type") String type, @PathVariable("begin") String begin, @PathVariable("end") String end) {
+        return statisticsDailyService.showData(type, begin, end);
     }
 
 }
