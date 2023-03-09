@@ -38,6 +38,13 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
 
     @Override
     public Boolean initDateStatisticsData(String date) {
+        QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
+        wrapper.eq("date_calculated", date);
+        StatisticsDaily data = super.getOne(wrapper);
+        if (data != null) {
+            return true;
+        }
+
         ResultCommon respond = ucenterClient.statRegister(date);
         Integer registerNum = FeignUtils.parseResult(respond, Integer.class);
         StatisticsDaily statisticsDaily = new StatisticsDaily();
@@ -49,10 +56,8 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         statisticsDaily.setCourseNum(RandomUtil.randomInt(500));
         statisticsDaily.setLoginNum(RandomUtil.randomInt(500));
         statisticsDaily.setVideoViewNum(RandomUtil.randomInt(500));
-        QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
-        wrapper.eq("date_calculated", date);
-        super.remove(wrapper);
-        return super.save(statisticsDaily);
+        super.save(statisticsDaily);
+        return true;
     }
 
     @Override
