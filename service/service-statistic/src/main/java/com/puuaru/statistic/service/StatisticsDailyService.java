@@ -17,5 +17,5 @@ import java.util.Map;
 public interface StatisticsDailyService extends IService<StatisticsDaily> {
     Boolean initDateStatisticsData(String date);
 
-    Map<String, Object> showData(String type, String begin, String end);
+    Map<String, Object> showData(String begin, String end);
 }

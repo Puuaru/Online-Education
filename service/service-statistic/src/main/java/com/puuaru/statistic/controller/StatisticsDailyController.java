@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,9 +42,9 @@ public class StatisticsDailyController {
         return statisticsDailyService.initDateStatisticsData(date);
     }
 
-    @GetMapping("/{type}/{begin}/{end}")
-    public Map<String, Object> showData(@PathVariable("type") String type, @PathVariable("begin") String begin, @PathVariable("end") String end) {
-        return statisticsDailyService.showData(type, begin, end);
+    @GetMapping("/{begin}/{end}")
+    public Map<String, Object> showData(@PathVariable("begin") String begin, @PathVariable("end") String end) {
+        return statisticsDailyService.showData(begin, end);
     }
 
 }
