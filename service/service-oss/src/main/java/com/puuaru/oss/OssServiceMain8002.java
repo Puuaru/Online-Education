@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.puuaru")
-@EnableDiscoveryClient
 public class OssServiceMain8002 {
     public static void main(String[] args) {
         SpringApplication.run(OssServiceMain8002.class, args);

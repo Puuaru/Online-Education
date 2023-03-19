@@ -13,4 +13,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface OrderService extends IService<Order> {
 
+    /**
+     * 存储Order并返回订单号
+     * @param courseId
+     * @param memberId
+     * @return
+     */
+    String saveOrder(Long courseId, String memberId);
+
+    /**
+     * 根据订单号获取订单
+     * @param orderNo 订单号，注意不是订单id
+     * @return
+     */
+    Order getOrderByNo(String orderNo);
+
+    Boolean isPurchased(Long courseId, String memberId);
 }

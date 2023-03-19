@@ -1,20 +1,22 @@
-package com.puuaru.order;
+package com.puuaru.statistic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @Description: OrderServiceMain8006
+ * @Description: StatisticServiceMain8007
  * @Author: puuaru
- * @Date: 2023/2/21
+ * @Date: 2023/3/3
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.puuaru")
 @EnableFeignClients
-public class OrderServiceMain8006 {
+@EnableScheduling
+public class StatisticServiceMain8007 {
     public static void main(String[] args) {
-        SpringApplication.run(OrderServiceMain8006.class, args);
+        SpringApplication.run(StatisticServiceMain8007.class, args);
     }
 }

@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.puuaru.center.mapper.UcenterMemberMapper">
 
+    <select id="statRegister" resultType="java.lang.Integer">
+        select count(*)
+        from ucenter_member as um
+        where date(gmt_create) = #{date}
+    </select>
+
+    <!-- <select id="statRegister" resultType="java.lang.Integer"> -->
+    <!--     select count(*), date(gmt_create) as create_date -->
+    <!--     from ucenter_member as um -->
+    <!--     group by date(um.gmt_create) -->
+    <!-- </select> -->
 </mapper>

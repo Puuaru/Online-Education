@@ -3,7 +3,7 @@ package com.puuaru.edu.controller;
 import com.puuaru.edu.service.EduChapterService;
 import com.puuaru.edu.service.EduCourseService;
 import com.puuaru.edu.vo.ChapterVO;
-import com.puuaru.edu.vo.CourseFrontInfo;
+import com.puuaru.servicebase.vo.CourseFrontInfo;
 import com.puuaru.edu.vo.CourseFrontQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.ApiOperation;
@@ -64,5 +64,13 @@ public class FrontCourseController {
         result.put("details", details);
         result.put("chapters", chapters);
         return ResultCommon.success().setData(result);
+    }
+
+    @GetMapping("/feign/{id}")
+    @ApiOperation("查询课程详细信息")
+    @Cacheable(value = "courseFeign", key = "#id")
+    public CourseFrontInfo getCourseFrontInfoForFeign(@PathVariable("id") Long id) {
+        CourseFrontInfo details = courseService.getCourseFrontInfo(id);
+        return details;
     }
 }

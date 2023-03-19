@@ -2,9 +2,9 @@ package com.puuaru.edu.controller;
 
 
 import com.puuaru.edu.service.EduCourseService;
-import com.puuaru.edu.vo.CourseInfo;
+import com.puuaru.edu.vo.CourseBackInfo;
 import com.puuaru.edu.vo.CoursePublishInfo;
-import com.puuaru.edu.vo.CourseQuery;
+import com.puuaru.edu.vo.CourseBackQuery;
 import com.puuaru.utils.ResultCommon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,13 +36,13 @@ public class EduCourseController {
 
     /**
      * 添加课程基本信息
-     * @param courseInfo 课程基本信息
+     * @param courseBackInfo 课程基本信息
      * @return
      */
     @PostMapping("")
     @ApiOperation("添加课程基本信息")
-    public ResultCommon addCourseInfo(@RequestBody CourseInfo courseInfo) {
-        String courseId = courseService.saveCourseInfo(courseInfo);
+    public ResultCommon addCourseInfo(@RequestBody CourseBackInfo courseBackInfo) {
+        String courseId = courseService.saveCourseInfo(courseBackInfo);
         return ResultCommon.success().setData("id", courseId);
     }
 
@@ -53,21 +53,21 @@ public class EduCourseController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据课程id查询课程信息")
-    public CourseInfo getCourseInfo(@PathVariable("id") Long id) {
-        CourseInfo courseInfo = courseService.getCourseInfo(id);
-        return courseInfo;
+    public CourseBackInfo getCourseInfo(@PathVariable("id") Long id) {
+        CourseBackInfo courseBackInfo = courseService.getCourseInfo(id);
+        return courseBackInfo;
     }
 
     /**
      * 更新课程信息，通过课程信息对象中的id指定课程
-     * @param courseInfo 课程信息对象
+     * @param courseBackInfo 课程信息对象
      * @return
      */
     @PutMapping("")
     @ApiOperation("更新课程信息")
-    public CourseInfo updateCourseInfo(@RequestBody CourseInfo courseInfo) {
-        courseService.updateCourseInfo(courseInfo);
-        return courseInfo;
+    public CourseBackInfo updateCourseInfo(@RequestBody CourseBackInfo courseBackInfo) {
+        courseService.updateCourseInfo(courseBackInfo);
+        return courseBackInfo;
     }
 
     /**
@@ -98,13 +98,13 @@ public class EduCourseController {
      * 条件分页查询课程
      * @param current
      * @param limit
-     * @param courseQuery
+     * @param courseBackQuery
      * @return
      */
     @PostMapping("/condition/{current}/{limit}")
     @ApiOperation("条件分页查询课程")
-    public ResultCommon getCoursePage(@PathVariable long current, @PathVariable long limit, @RequestBody CourseQuery courseQuery) {
-        Map<String, Object> result = courseService.getPage(current, limit, courseQuery);
+    public ResultCommon getCoursePage(@PathVariable long current, @PathVariable long limit, @RequestBody CourseBackQuery courseBackQuery) {
+        Map<String, Object> result = courseService.getPage(current, limit, courseBackQuery);
         return ResultCommon.success().setData(result);
     }
 

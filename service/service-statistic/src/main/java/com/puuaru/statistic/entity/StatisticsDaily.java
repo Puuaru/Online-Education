@@ -1,4 +1,4 @@
-package com.puuaru.center.entity;
+package com.puuaru.statistic.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -17,53 +17,38 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 会员表
+ * 网站统计日数据
  * </p>
  *
  * @author puuaru
- * @since 2023-01-27
+ * @since 2023-03-03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="UcenterMember对象", description="会员表")
-public class UcenterMember implements Serializable {
+@ApiModel(value="StatisticsDaily对象", description="网站统计日数据")
+public class StatisticsDaily implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "会员id")
+    @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @JsonSerialize(using = ToStringSerializer.class)
-    private String id;
+    private Long id;
 
-    @ApiModelProperty(value = "第三方id")
-    private String openid;
+    @ApiModelProperty(value = "统计日期")
+    private String dateCalculated;
 
-    @ApiModelProperty(value = "邮箱号")
-    private String email;
+    @ApiModelProperty(value = "注册人数")
+    private Integer registerNum;
 
-    @ApiModelProperty(value = "密码")
-    private String password;
+    @ApiModelProperty(value = "登录人数")
+    private Integer loginNum;
 
-    @ApiModelProperty(value = "昵称")
-    private String nickname;
+    @ApiModelProperty(value = "每日播放视频数")
+    private Integer videoViewNum;
 
-    @ApiModelProperty(value = "性别 0 女，1 男")
-    private Integer sex;
-
-    @ApiModelProperty(value = "年龄")
-    private Integer age;
-
-    @ApiModelProperty(value = "用户头像")
-    private String avatar;
-
-    @ApiModelProperty(value = "用户签名")
-    private String sign;
-
-    @ApiModelProperty(value = "是否禁用 1（true）已禁用，  0（false）未禁用")
-    private Boolean isDisabled;
-
-    @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
-    private Boolean isDeleted;
+    @ApiModelProperty(value = "每日新增课程数")
+    private Integer courseNum;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

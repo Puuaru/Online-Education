@@ -9,7 +9,7 @@ import lombok.Data;
  * @Date: 2023/1/3
  */
 @Data
-public class CourseQuery {
+public class CourseBackQuery {
     @ApiModelProperty(value = "课程标题")
     private String title;
 

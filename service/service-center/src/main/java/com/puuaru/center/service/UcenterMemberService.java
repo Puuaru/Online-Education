@@ -1,6 +1,6 @@
 package com.puuaru.center.service;
 
-import com.puuaru.center.entity.UcenterMember;
+import com.puuaru.servicebase.entity.UcenterMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.puuaru.center.vo.MemberRegisterVo;
 
@@ -20,4 +20,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     UcenterMember register(MemberRegisterVo registerVo);
 
     UcenterMember handleGithubUser(Map<String, Object> userMap);
+
+    Integer statRegister(String date);
 }

@@ -7,11 +7,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.puuaru.center.entity.ThreePartyProperties;
-import com.puuaru.center.entity.UcenterMember;
+import com.puuaru.servicebase.entity.UcenterMember;
 import com.puuaru.center.mapper.ThreePartyPropertiesMapper;
 import com.puuaru.center.service.GithubService;
 import com.puuaru.center.service.UcenterMemberService;
-import com.puuaru.helpers.UrlHelper;
+import com.puuaru.helpers.UrlUtils;
 import com.puuaru.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,8 +49,8 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
     @Override
     public String login() {
         String baseUrl = "https://github.com/login/oauth/authorize";
-        UrlHelper urlHelper = new UrlHelper(baseUrl);
-        String redirectUrl = urlHelper.addParam("client_id", properties.getClientId())
+        //UrlUtils urlUtils = new UrlUtils(baseUrl);
+        String redirectUrl = UrlUtils.init(baseUrl).addParam("client_id", properties.getClientId())
                 .addParam("state", IdUtil.randomUUID().substring(0, 10))
                 .getUrl();
         return redirectUrl;
@@ -65,9 +65,7 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
     public String callbackHandler(String code) {
         String baseTokenUrl = "https://github.com/login/oauth/access_token";
         String baseRedirectUrl = "http://localhost:3000";
-        UrlHelper tokenUrlHelper = new UrlHelper(baseTokenUrl);
-        UrlHelper redirectHelper = new UrlHelper(baseRedirectUrl);
-        String tokenUrl = tokenUrlHelper.addParam("client_id", properties.getClientId())
+        String tokenUrl = UrlUtils.init(baseTokenUrl).addParam("client_id", properties.getClientId())
                 .addParam("client_secret", properties.getSecret())
                 .addParam("code", code)
                 .getUrl();
@@ -79,7 +77,7 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
         Map<String, Object> userMap = JSONObject.parseObject(userString);
         UcenterMember member = memberService.handleGithubUser(userMap);
         String token = JwtUtils.generateJwt(member.getId(), member.getNickname());
-        String redirectUrl = redirectHelper.addParam("token", token).getUrl();
+        String redirectUrl = UrlUtils.init(baseRedirectUrl).addParam("token", token).getUrl();
         return redirectUrl;
     }
 

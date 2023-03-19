@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.checkerframework.checker.units.qual.A;
 
 import java.math.BigDecimal;
 
@@ -15,8 +14,8 @@ import java.math.BigDecimal;
  * @Date: 2022/12/6
  */
 @Data
-@Api("用于接受前端返回的课程信息的VO类")
-public class CourseInfo {
+@Api("用于接受管理系统的前端返回的课程信息的VO类")
+public class CourseBackInfo {
 
     @ApiModelProperty(value = "课程ID")
     @JsonSerialize(using = ToStringSerializer.class)
