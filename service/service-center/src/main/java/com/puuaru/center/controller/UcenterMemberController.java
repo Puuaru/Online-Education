@@ -102,5 +102,11 @@ public class UcenterMemberController {
     public Integer statRegister(@PathVariable("date") String date) {
         return memberService.statRegister(date);
     }
+
+    @GetMapping("/stat/test")
+    public void aspectTest() {
+        System.out.println("start main");
+        System.out.println("end main");
+    }
 }
 

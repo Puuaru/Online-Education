@@ -41,9 +41,4 @@ public class GithubController {
         String redirectUrl = githubService.callbackHandler(code);
         return "redirect:" + redirectUrl;
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "Hello";
-    }
 }
