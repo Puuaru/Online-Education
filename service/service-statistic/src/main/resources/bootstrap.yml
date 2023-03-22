@@ -17,4 +17,24 @@ spring:
             refresh: true
           - data-id: sentinel-feign.yml
             refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
         file-extension: yml
+    stream:
+      bindings:
+        loginCount-in-0:
+          destination: login-count-exchange
+          content-type: application/json
+          binder: defaultRabbit
+        registerCount-in-0:
+          destination: login-count-exchange
+          content-type: application/json
+          binder: defaultRabbit
+      rabbit:
+        bindings:
+          loginCount-in-0:
+            consumer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+      function:
+        definition: loginCount

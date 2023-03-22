@@ -63,5 +63,17 @@ services:
       - "8858:8858"
     networks:
       - web-edu
+  rabbitmq:
+    image: rabbitmq:3.8.19-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=puuaru
+      - RABBITMQ_DEFAULT_PASS=puuaru
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - web-edu
 networks:
   web-edu:
