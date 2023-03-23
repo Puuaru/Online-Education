@@ -9,23 +9,23 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * @Description: LoginCounter
+ * @Description: StatisticsCounter
  * @Author: puuaru
  * @Date: 2023/3/22
  */
 @Component
-public class LoginCounter {
+public class StatisticsCounter {
     private final StatisticsDailyService statisticsDailyService;
 
     @Autowired
-    public LoginCounter(StatisticsDailyService statisticsDailyService) {
+    public StatisticsCounter(StatisticsDailyService statisticsDailyService) {
         this.statisticsDailyService = statisticsDailyService;
     }
 
     @Bean
-    public Consumer<Map<String, String>> loginCount() {
+    public Consumer<Map<String, String>> updateStatistics() {
         return params -> {
-            statisticsDailyService.updateStatistic(params.get("type"), params.get("date"));
+            statisticsDailyService.updateStatistics(params.get("type"), params.get("date"));
         };
     }
 }

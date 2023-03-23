@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.puuaru.statistic.mapper.StatisticsDailyMapper">
 
+    <update id="updateStatistics">
+        update `statistics_daily`
+        <if test="type == 'login_num'">
+            set login_num = login_num + 128
+        </if>
+        <if test="type == 'register_num'">
+            set register_num = register_num + 64
+        </if>
+        <if test="type == 'video_view_num'">
+            set video_view_num = video_view_num + 128
+        </if>
+        <if test="type == 'course_view_num'">
+            set course_view_num = course_view_num + 128
+        </if>
+        where date_calculated = #{date}
+    </update>
+
+    <update id="refreshStatistics">
+        update statistics_daily
+        <if test="type == 'login_num'">
+            set login_num = login_num + #{count}
+        </if>
+        <if test="type == 'register_num'">
+            set register_num = register_num + #{count}
+        </if>
+        <if test="type == 'video_view_num'">
+            set video_view_num = video_view_num + #{count}
+        </if>
+        <if test="type == 'course_view_num'">
+            set course_view_num = course_view_num + #{count}
+        </if>
+        where date_calculated = date_format(curdate(), '%Y-%m-%d')
+    </update>
 </mapper>

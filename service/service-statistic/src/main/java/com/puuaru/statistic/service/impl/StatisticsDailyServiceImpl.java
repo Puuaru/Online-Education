@@ -11,6 +11,7 @@ import com.puuaru.statistic.vo.DataVO;
 import com.puuaru.utils.FeignUtils;
 import com.puuaru.utils.ResultCommon;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -32,10 +33,12 @@ import java.util.stream.Collectors;
 public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMapper, StatisticsDaily> implements StatisticsDailyService {
 
     private final UcenterClient ucenterClient;
+    private final RedisTemplate redisTemplate;
 
     @Autowired
-    public StatisticsDailyServiceImpl(UcenterClient ucenterClient) {
+    public StatisticsDailyServiceImpl(UcenterClient ucenterClient, RedisTemplate redisTemplate) {
         this.ucenterClient = ucenterClient;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -64,6 +67,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
 
     @Override
     public Map<String, Object> showData(String begin, String end) {
+        refreshData();
         QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
         Map<String, Object> map = new HashMap<>();
         if (!ObjectUtils.isEmpty(begin) && !"undefined".equals(begin)) {
@@ -72,19 +76,8 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         if (!ObjectUtils.isEmpty(end) && !"undefined".equals(end)) {
             wrapper.le("date_calculated", end);
         }
-        //wrapper.select(type, "date_calculated");
         List<StatisticsDaily> list = super.list(wrapper);
-        //map.put("test", list);
         List<String> xData = list.stream().map(StatisticsDaily::getDateCalculated).collect(Collectors.toList());
-        //List<Integer> yData = list.stream()
-        //        .map((item) -> switch (type) {
-        //                    case "register_num" -> item.getRegisterNum();
-        //                    case "login_num" -> item.getLoginNum();
-        //                    case "video_view_num" -> item.getVideoViewNum();
-        //                    case "course_num" -> item.getCourseNum();
-        //                    default -> null;
-        //                }
-        //        ).collect(Collectors.toList());
         List<DataVO> yData = new ArrayList<>();
         DataVO loginNum = new DataVO("每日登录人数", list.stream().map(StatisticsDaily::getLoginNum).collect(Collectors.toList()));
         DataVO registerNum = new DataVO("每日注册人数",  list.stream().map(StatisticsDaily::getRegisterNum).collect(Collectors.toList()));
@@ -98,5 +91,23 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         map.put("dateList", xData);
         map.put("countList", yData);
         return map;
+    }
+
+    @Override
+    public void updateStatistics(String type, String date) {
+        baseMapper.updateStatistics(type, date);
+    }
+
+    private void refreshData() {
+        if (!redisTemplate.hasKey("count_stat")) {
+            return;
+        }
+        Map<String, Integer> countStat = redisTemplate.opsForHash().entries("count_stat");
+        countStat.entrySet().stream().forEach((entry) -> {
+            // 更新数据
+            baseMapper.refreshStatistics(entry.getKey(), entry.getValue());
+            // 计数器归零
+            redisTemplate.opsForHash().put("count_stat", entry.getKey(), 0);
+        });
     }
 }

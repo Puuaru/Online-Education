@@ -3,7 +3,6 @@ package com.puuaru.statistic.service;
 import com.puuaru.statistic.entity.StatisticsDaily;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,4 +17,6 @@ public interface StatisticsDailyService extends IService<StatisticsDaily> {
     Boolean initDateStatisticsData(String date);
 
     Map<String, Object> showData(String begin, String end);
+
+    void updateStatistics(String type, String date);
 }
