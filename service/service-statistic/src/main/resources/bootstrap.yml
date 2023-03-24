@@ -22,19 +22,15 @@ spring:
         file-extension: yml
     stream:
       bindings:
-        loginCount-in-0:
-          destination: login-count-exchange
-          content-type: application/json
-          binder: defaultRabbit
-        registerCount-in-0:
+        updateStatistics-in-0:
           destination: login-count-exchange
           content-type: application/json
           binder: defaultRabbit
       rabbit:
         bindings:
-          loginCount-in-0:
+          updateStatistics-in-0:
             consumer:
               auto-bind-dlq: true
               dead-letter-exchange: DLX
       function:
-        definition: loginCount
+        definition: updateStatistics
