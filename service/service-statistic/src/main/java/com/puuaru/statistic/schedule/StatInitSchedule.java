@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.time.LocalDate;
 
 /**
@@ -23,6 +24,8 @@ public class StatInitSchedule {
 
     @Scheduled(cron = "1 0 0 * * ?")
     public void initStatisticDataDaily() {
-        statisticsDailyService.initDateStatisticsData(LocalDate.now().toString());
+        Clock defaultZone = Clock.systemDefaultZone();
+        statisticsDailyService.initDateStatisticsData(LocalDate.now(defaultZone).toString());
+        statisticsDailyService.refreshData(LocalDate.now(defaultZone).minusDays(1).toString());
     }
 }

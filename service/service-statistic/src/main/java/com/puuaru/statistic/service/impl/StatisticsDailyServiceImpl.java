@@ -15,6 +15,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +69,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
 
     @Override
     public Map<String, Object> showData(String begin, String end) {
-        refreshData();
+        refreshData(LocalDate.now(Clock.systemDefaultZone()).toString());
         QueryWrapper<StatisticsDaily> wrapper = new QueryWrapper<>();
         Map<String, Object> map = new HashMap<>();
         if (!ObjectUtils.isEmpty(begin) && !"undefined".equals(begin)) {
@@ -98,14 +100,15 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         baseMapper.updateStatistics(type, date);
     }
 
-    private void refreshData() {
+    @Override
+    public void refreshData(String date) {
         if (!redisTemplate.hasKey("count_stat")) {
             return;
         }
         Map<String, Integer> countStat = redisTemplate.opsForHash().entries("count_stat");
         countStat.entrySet().stream().forEach((entry) -> {
             // 更新数据
-            baseMapper.refreshStatistics(entry.getKey(), entry.getValue());
+            baseMapper.refreshStatistics(entry.getKey(), entry.getValue(), date);
             // 计数器归零
             redisTemplate.opsForHash().put("count_stat", entry.getKey(), 0);
         });

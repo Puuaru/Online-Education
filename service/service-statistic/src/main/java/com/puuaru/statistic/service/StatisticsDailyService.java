@@ -19,4 +19,6 @@ public interface StatisticsDailyService extends IService<StatisticsDaily> {
     Map<String, Object> showData(String begin, String end);
 
     void updateStatistics(String type, String date);
+
+    void refreshData(String date);
 }

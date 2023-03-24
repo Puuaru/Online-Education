@@ -20,3 +20,15 @@ spring:
           - data-id: application-${spring.profiles.active}.yml
             refresh: true
         file-extension: yml
+    stream:
+      bindings:
+        updateStatistics-out-0:
+          destination: statistics-exchange
+          content-type: application/json
+          binder: defaultRabbit
+      rabbit:
+        bindings:
+          updateStatistics-out-0:
+            consumer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX

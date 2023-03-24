@@ -14,7 +14,7 @@
             set video_view_num = video_view_num + 128
         </if>
         <if test="type == 'course_view_num'">
-            set course_view_num = course_view_num + 128
+            set course_num = course_num + 128
         </if>
         where date_calculated = #{date}
     </update>
@@ -31,8 +31,8 @@
             set video_view_num = video_view_num + #{count}
         </if>
         <if test="type == 'course_view_num'">
-            set course_view_num = course_view_num + #{count}
+            set course_num = course_num + #{count}
         </if>
-        where date_calculated = date_format(curdate(), '%Y-%m-%d')
+        where date_calculated = #{date}
     </update>
 </mapper>

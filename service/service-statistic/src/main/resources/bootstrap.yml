@@ -23,7 +23,7 @@ spring:
     stream:
       bindings:
         updateStatistics-in-0:
-          destination: login-count-exchange
+          destination: statistics-exchange
           content-type: application/json
           binder: defaultRabbit
       rabbit:

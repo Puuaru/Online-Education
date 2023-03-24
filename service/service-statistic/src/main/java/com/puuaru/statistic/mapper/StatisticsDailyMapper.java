@@ -16,5 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StatisticsDailyMapper extends BaseMapper<StatisticsDaily> {
     void updateStatistics(String type, String date);
 
-    void refreshStatistics(String type, Integer count);
+    void refreshStatistics(String type, Integer count, String date);
 }
