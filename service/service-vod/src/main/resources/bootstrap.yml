@@ -26,9 +26,17 @@ spring:
           destination: statistics-exchange
           content-type: application/json
           binder: defaultRabbit
+        videoViewCount-out-0:
+          destination: videoViewCount-exchange
+          content-type: application/json
+          binder: defaultRabbit
       rabbit:
         bindings:
           updateStatistics-out-0:
-            consumer:
+            producer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+          videoViewCount-out-0:
+            producer:
               auto-bind-dlq: true
               dead-letter-exchange: DLX

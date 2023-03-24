@@ -26,10 +26,28 @@ spring:
           destination: statistics-exchange
           content-type: application/json
           binder: defaultRabbit
+        videoViewCount-in-0:
+          destination: statistics-exchange
+          content-type: application/json
+          binder: defaultRabbit
+        courseBuyCount-in-0:
+          destination: statistics-exchange
+          content-type: application/json
+          binder: defaultRabbit
       rabbit:
         bindings:
           updateStatistics-out-0:
             producer:
+              ttl: 60000  # 60s 无消费则置入死信队列
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+          videoViewCount-in-0:
+            consumer:
+              ttl: 60000  # 60s 无消费则置入死信队列
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+          courseBuyCount-in-0:
+            consumer:
               ttl: 60000  # 60s 无消费则置入死信队列
               auto-bind-dlq: true
               dead-letter-exchange: DLX
