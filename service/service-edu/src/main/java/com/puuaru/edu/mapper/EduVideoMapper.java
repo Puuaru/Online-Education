@@ -14,5 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface EduVideoMapper extends BaseMapper<EduVideo> {
-
+    void updateVideoViewCount(Long videoId);
 }

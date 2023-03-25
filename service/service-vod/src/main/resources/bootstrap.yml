@@ -19,6 +19,8 @@ spring:
         shared-configs:
           - data-id: application-${spring.profiles.active}.yml
             refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
         file-extension: yml
     stream:
       bindings:

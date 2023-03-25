@@ -1,8 +1,7 @@
 package com.puuaru.vod.aspect;
 
 import lombok.SneakyThrows;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -26,7 +25,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Component
 public class MessageAspect {
     private static final String STAT_HASH_NAME = "count_stat";
-    private static final String VOD_HASH_NAME = "count_stat";
+    private static final String VOD_HASH_NAME = "count_vod";
     private static final String VIDEO_VIEW_COUNTER = "video_view_num";
     private static final int VIDEO_VIEW_COUNTER_THRESHOLD = 128;
     private static final int VIDEO_VIEW_UPDATE_THRESHOLD = 64;
@@ -69,13 +68,13 @@ public class MessageAspect {
     }
 
     @Before("viewCourse()")
-    public void singleVideoViewHandler(ProceedingJoinPoint joinPoint) {
-        Integer videoId = (Integer) joinPoint.getArgs()[0];
+    public void singleVideoViewHandler(JoinPoint joinPoint) {
+        String videoId = (String) joinPoint.getArgs()[0];
         Integer count = (Integer) redisTemplate.opsForHash().get(VOD_HASH_NAME, videoId);
         // 读取并更新计数，通过位运算求余
         count = count == null ? 1 : (count + 1) & (VIDEO_VIEW_UPDATE_THRESHOLD - 1);
         // 更新计数器
-        redisTemplate.opsForHash().put(STAT_HASH_NAME, videoId, count);
+        redisTemplate.opsForHash().put(VOD_HASH_NAME, videoId, count);
         if (count == 0) {
             // 到达阈值，则发送消息通知 Statistics 模块更新数据
             threadPoolExecutor.execute(() -> {

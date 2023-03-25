@@ -42,7 +42,6 @@ public class VodController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation("删除视频")
-
     public Boolean deleteSourceVideo(@PathVariable("id") String videoSourceId) {
         Boolean result = vodService.deleteSourceVideo(videoSourceId);
         return result;
