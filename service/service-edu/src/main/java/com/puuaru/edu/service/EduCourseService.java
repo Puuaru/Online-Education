@@ -90,4 +90,6 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return
      */
     CourseFrontInfo getCourseFrontInfo(Long id);
+
+    void updateCourseView(String courseId, int courseViewCacheThreshold);
 }

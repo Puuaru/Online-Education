@@ -203,6 +203,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         return result;
     }
 
+    @Override
+    public void updateCourseView(String courseId, int increment) {
+        Long id = Long.parseLong(courseId);
+        baseMapper.updateCourseView(id, increment);
+    }
+
     private Map<String, Object> getPageResult(Page<EduCourse> coursePage) {
         long total = coursePage.getTotal();
         List<EduCourse> courses = coursePage.getRecords();

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.puuaru.edu.mapper.EduCourseMapper">
+    <update id="updateCourseView">
+        update edu_course
+        set view_count = view_count + #{increment}
+        where id = #{id}
+    </update>
 
     <select id="getCoursePublishInfo" resultType="com.puuaru.edu.vo.CoursePublishInfo">
         select ec.id, ec.title, ec.cover, ec.lesson_num, ec.price,
