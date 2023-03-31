@@ -6,6 +6,11 @@
         set view_count = view_count + #{increment}
         where id = #{id}
     </update>
+    <update id="updateCourseBuyCount">
+        update edu_course
+        set buy_count = buy_count + 1
+        where id = #{id}
+    </update>
 
     <select id="getCoursePublishInfo" resultType="com.puuaru.edu.vo.CoursePublishInfo">
         select ec.id, ec.title, ec.cover, ec.lesson_num, ec.price,

@@ -31,7 +31,7 @@ spring:
           content-type: application/json
           binder: defaultRabbit
         updateCourseBuyCount-in-0:
-          destination: statistics-exchange
+          destination: courseBuyCount-exchange
           content-type: application/json
           binder: defaultRabbit
       rabbit:
@@ -52,4 +52,4 @@ spring:
               auto-bind-dlq: true
               dead-letter-exchange: DLX
       function:
-        definition: updateVideoView
+        definition: updateVideoView;updateCourseBuyCount

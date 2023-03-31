@@ -56,7 +56,6 @@ public class MessageAspect {
         ResultCommon proceed = (ResultCommon) proceedingJoinPoint.proceed();
         Integer statCourseViewCount = updateCounter(STAT_HASH_NAME, COURSE_VIEW_COUNTER, COURSE_VIEW_CACHE_THRESHOLD);
         Integer selectedCourseView = updateCounter(COURSE_HASH_NAME, courseId, COURSE_VIEW_CACHE_THRESHOLD);
-        System.out.println(selectedCourseView);
         if (selectedCourseView == 0) {
             courseService.updateCourseView(courseId, COURSE_VIEW_CACHE_THRESHOLD);
             selectedCourseView = COURSE_VIEW_CACHE_THRESHOLD;
