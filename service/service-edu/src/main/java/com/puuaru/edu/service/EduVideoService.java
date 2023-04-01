@@ -17,4 +17,6 @@ public interface EduVideoService extends IService<EduVideo> {
     Boolean removeVideosByCourseId(Long courseId);
 
     Boolean removeVideosByChapterId(Long chapterId);
+
+    void updateVideosViewBySourceId(String sourceId);
 }

@@ -17,3 +17,18 @@ spring:
             refresh: true
           - data-id: sentinel-feign.yml
             refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
+    stream:
+      bindings:
+        updateCourseBuyCount-out-0:
+          destination: courseBuyCount-exchange
+          content-type: application/json
+          binder: defaultRabbit
+      rabbit:
+        bindings:
+          updateCourseBuyCount-out-0:
+            producer:
+              ttl: 60000  # 60s 无消费则置入死信队列
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX

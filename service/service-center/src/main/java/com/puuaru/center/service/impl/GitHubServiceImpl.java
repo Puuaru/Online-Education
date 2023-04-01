@@ -49,7 +49,6 @@ public class GitHubServiceImpl extends ServiceImpl<ThreePartyPropertiesMapper, T
     @Override
     public String login() {
         String baseUrl = "https://github.com/login/oauth/authorize";
-        //UrlUtils urlUtils = new UrlUtils(baseUrl);
         String redirectUrl = UrlUtils.init(baseUrl).addParam("client_id", properties.getClientId())
                 .addParam("state", IdUtil.randomUUID().substring(0, 10))
                 .getUrl();

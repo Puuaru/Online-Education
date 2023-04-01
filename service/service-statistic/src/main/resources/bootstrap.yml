@@ -17,4 +17,20 @@ spring:
             refresh: true
           - data-id: sentinel-feign.yml
             refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
         file-extension: yml
+    stream:
+      bindings:
+        updateStatistics-in-0:
+          destination: statistics-exchange
+          content-type: application/json
+          binder: defaultRabbit
+      rabbit:
+        bindings:
+          updateStatistics-in-0:
+            consumer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+      function:
+        definition: updateStatistics

@@ -63,6 +63,18 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         return result;
     }
 
+    @Override
+    public void updateVideosViewBySourceId(String sourceId) {
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("video_source_id", sourceId);
+        List<EduVideo> list = super.list(wrapper);
+        List<EduVideo> modifiedList = list.stream().map((item) -> {
+            item.setPlayCount(item.getPlayCount() + 64);
+            return item;
+        }).collect(Collectors.toList());
+        super.saveOrUpdateBatch(modifiedList);
+    }
+
     /**
      * 批量删除小节及视频
      * @param removeByCourse 是否通过courseId删除，否则为通过chapterId删除

@@ -19,4 +19,26 @@ spring:
         shared-configs:
           - data-id: application-${spring.profiles.active}.yml
             refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
         file-extension: yml
+    stream:
+      bindings:
+        updateStatistics-out-0:
+          destination: statistics-exchange
+          content-type: application/json
+          binder: defaultRabbit
+        videoViewCount-out-0:
+          destination: videoViewCount-exchange
+          content-type: application/json
+          binder: defaultRabbit
+      rabbit:
+        bindings:
+          updateStatistics-out-0:
+            producer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+          videoViewCount-out-0:
+            producer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX

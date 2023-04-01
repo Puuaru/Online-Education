@@ -102,5 +102,6 @@ public class UcenterMemberController {
     public Integer statRegister(@PathVariable("date") String date) {
         return memberService.statRegister(date);
     }
+
 }
 
