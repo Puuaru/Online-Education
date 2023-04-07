@@ -1,0 +1,56 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      config:
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        server-addr: localhost:8848
+        shared-configs:
+          - data-id: sentinel-feign.yml
+            refresh: true
+    gateway:
+      discovery:
+        locator:
+          # 根据注册中心动态路由
+          enabled: true
+      routes:
+        - id: service-center
+          uri:
+            lb://service-center
+          predicates:
+            - Path=/center/**
+        - id: service-cms
+          uri:
+            lb://service-cms
+          predicates:
+            - Path=/cms/**
+        - id: service-edu
+          uri:
+            lb://service-edu
+          predicates:
+            - Path=/edu/**
+        - id: service-order
+          uri:
+            lb://service-order
+          predicates:
+            - Path=/order/**
+        - id: service-oss
+          uri:
+            lb://service-oss
+          predicates:
+            - Path=/oss/**
+        - id: service-statistic
+          uri:
+            lb://service-statistic
+          predicates:
+            - Path=/statistic/**
+        - id: service-vod
+          uri:
+            lb://service-vod
+          predicates:
+            - Path=/vod/**

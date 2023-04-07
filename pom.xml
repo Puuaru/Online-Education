@@ -16,6 +16,7 @@
     <modules>
         <module>service</module>
         <module>common</module>
+        <module>infrastracture</module>
         <!-- <module>common/common-utils</module> -->
     </modules>
     <packaging>pom</packaging>
