@@ -46,6 +46,10 @@ public class UrlUtils {
     }
 
     public String getUrl() {
-        return url;
+        String result = this.url;
+        if (paramCount > 0) {
+            result = url.substring(0, url.length() - 1);
+        }
+        return result;
     }
 }

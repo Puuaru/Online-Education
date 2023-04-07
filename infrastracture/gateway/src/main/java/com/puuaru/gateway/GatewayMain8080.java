@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.puuaru")
-public class GatewayMain80 {
+public class GatewayMain8080 {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayMain80.class, args);
+        SpringApplication.run(GatewayMain8080.class, args);
     }
 }
