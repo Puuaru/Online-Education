@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/center/email")
-@CrossOrigin
 public class EmailController {
     private final EmailService emailService;
 

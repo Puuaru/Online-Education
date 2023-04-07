@@ -15,24 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/center/github")
-@CrossOrigin(origins = "*")
 public class GithubController {
     private final GithubService githubService;
 
     @Autowired
     public GithubController(GithubService githubService) {
         this.githubService = githubService;
-    }
-
-    /**
-     * 使用Github OAuth登录
-     * @return  重定向到github
-     */
-    @GetMapping("")
-    @ApiOperation("使用Github OAuth登录")
-    public String login() {
-        String redirectUrl = githubService.login();
-        return "redirect:" + redirectUrl;
     }
 
     @GetMapping("/callback")

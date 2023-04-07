@@ -1,12 +1,12 @@
 package com.puuaru.center.controller;
 
 
+import com.puuaru.center.service.GithubService;
 import com.puuaru.servicebase.entity.UcenterMember;
 import com.puuaru.center.service.UcenterMemberService;
 import com.puuaru.center.vo.MemberRegisterVo;
 import com.puuaru.utils.JwtUtils;
 import com.puuaru.utils.ResultCommon;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/center/member")
-@CrossOrigin
 public class UcenterMemberController {
     private final UcenterMemberService memberService;
+    private final GithubService githubService;
 
     @Autowired
-    public UcenterMemberController(UcenterMemberService ucenterMemberService) {
+    public UcenterMemberController(UcenterMemberService ucenterMemberService, GithubService githubService) {
         this.memberService = ucenterMemberService;
+        this.githubService = githubService;
     }
 
     /**
@@ -103,5 +104,16 @@ public class UcenterMemberController {
         return memberService.statRegister(date);
     }
 
+
+    /**
+     * 使用Github OAuth登录
+     * @return  重定向到github
+     */
+    @GetMapping("/login/github")
+    @ApiOperation("使用Github OAuth登录")
+    public ResultCommon login() {
+        String redirectUrl = githubService.login();
+        return ResultCommon.success().setData("redirectUrl", redirectUrl);
+    }
 }
 
