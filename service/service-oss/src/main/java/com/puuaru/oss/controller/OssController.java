@@ -14,10 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/oss/file")
-@CrossOrigin
 public class OssController {
+    private final OssService ossService;
+
     @Autowired
-    private OssService ossService;
+    public OssController(OssService ossService) {
+        this.ossService = ossService;
+    }
 
     @PostMapping("")
     @ApiOperation("上传图片")

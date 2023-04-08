@@ -21,7 +21,6 @@ import java.util.Map;
  * @Date: 2023/2/5
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/edu/front/course")
 public class FrontCourseController {
     private final EduCourseService courseService;

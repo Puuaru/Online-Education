@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/edu/user")
-@CrossOrigin    // 暂时解决跨域
 public class EduLoginController {
     @PostMapping("login")
     public ResultCommon login() {

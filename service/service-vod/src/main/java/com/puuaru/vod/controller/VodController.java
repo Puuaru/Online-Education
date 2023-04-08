@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/vod")
-@CrossOrigin
 public class VodController {
     private final VodService vodService;
 

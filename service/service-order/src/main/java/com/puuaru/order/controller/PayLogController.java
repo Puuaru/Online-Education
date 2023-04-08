@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * @since 2023-02-21
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/order/pay-log")
 public class PayLogController {
     private final PayLogService payLogService;

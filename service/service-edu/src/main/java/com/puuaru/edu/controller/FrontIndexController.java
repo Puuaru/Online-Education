@@ -25,7 +25,6 @@ import java.util.Map;
  */
 @RequestMapping("/edu/front/index")
 @RestController
-@CrossOrigin
 public class FrontIndexController {
     private final EduCourseService courseService;
 

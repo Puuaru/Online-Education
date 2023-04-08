@@ -31,7 +31,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/edu/teacher")
 @Api(value = "teacher management")
-@CrossOrigin
 public class EduTeacherController {
     private final EduTeacherService eduTeacherService;
 

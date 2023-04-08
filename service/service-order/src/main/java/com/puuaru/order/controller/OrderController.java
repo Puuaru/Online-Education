@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2023-02-21
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/order/operation/")
 @Api("订单操作")
 public class OrderController {
