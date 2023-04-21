@@ -1,0 +1,22 @@
+server:
+  port: 8008
+spring:
+  application:
+    name: service-acl
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: @nacos.namespace@
+        username: nacos
+        password: nacos
+        shared-configs:
+          - data-id: application-${spring.profiles.active}.yml
+            refresh: true
+          - data-id: sentinel-feign.yml
+            refresh: true
+          - data-id: rabbitmq.yml
+            refresh: true
+        file-extension: yml
