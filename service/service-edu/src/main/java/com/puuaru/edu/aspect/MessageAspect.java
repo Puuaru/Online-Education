@@ -79,6 +79,7 @@ public class MessageAspect {
     }
 
     private Integer updateCounter(String hashName, String key, Integer threshold) {
+        // TODO: 改为用increment()
         Integer count = (Integer) redisTemplate.opsForHash().get(hashName, key);
         // 读取并更新计数，通过位运算求余
         count = count == null ? 1 : (count + 1) & (threshold - 1);

@@ -1,10 +1,13 @@
 package com.puuaru.acl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -63,5 +66,16 @@ public class Permission implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime gmtModified;
 
+    /**
+     * 用于进行权限的父子分级
+     * 实现中考虑使用递归
+     */
 
+    @ApiModelProperty(value = "层级")
+    @TableField(exist = false)
+    private Integer level;
+
+    @ApiModelProperty(value = "子级权限")
+    @TableField(exist = false)
+    private List<Permission> children;
 }
