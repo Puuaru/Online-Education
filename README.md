@@ -24,7 +24,8 @@ online-education
     ├── service-cms            // 8004 提供首页控制服务
     ├── service-center         // 8005 提供用户登录注册服务
     ├── service-order          // 8006 提供订单提交及支付确认服务
-    └── service-statistics     // 8007 提供数据统计服务
+    ├── service-statistics     // 8007 提供数据统计服务
+    └── service-acl            // 8008 提供后台管理权限控制服务
 ```
 
 ## 容器端口
@@ -41,4 +42,4 @@ online-education
 ## TODO-LIST
 
 - [ ] sentinel-dashboard 使用 push 模式的改造
-- [ ] services 配置上传至 nacos
+- [x] services 配置上传至 nacos
