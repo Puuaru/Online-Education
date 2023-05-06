@@ -72,4 +72,10 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         super.removeByIds(childrenIds);
         childrenIds.forEach(id -> deleteChildren(id, wrapper));
     }
+
+    @Override
+    public List<String> getPermissionsByUserId(Long userId) {
+        return super.baseMapper.getPermissionsByUserId(userId);
+    }
+
 }

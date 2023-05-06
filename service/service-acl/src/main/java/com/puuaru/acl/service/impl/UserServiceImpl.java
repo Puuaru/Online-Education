@@ -1,5 +1,6 @@
 package com.puuaru.acl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.puuaru.entity.User;
 import com.puuaru.acl.mapper.UserMapper;
 import com.puuaru.acl.service.UserService;
@@ -17,4 +18,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Override
+    public User getUserByUsername(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username);
+        return super.getOne(wrapper);
+    }
 }

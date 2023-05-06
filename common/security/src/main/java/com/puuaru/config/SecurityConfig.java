@@ -29,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/acl/index/login").permitAll()
+                // 放行 swagger
+                .authorizeRequests().antMatchers("/swagger-ui/**", "/v2/**", "/swagger-resources/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new LoginFilter(redisTemplate, authenticationManager()))

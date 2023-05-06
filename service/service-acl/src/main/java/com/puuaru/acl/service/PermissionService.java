@@ -18,4 +18,6 @@ public interface PermissionService extends IService<Permission> {
     List<Permission> getPermissionsList();
 
     void deletePermissionById(Long permissionId);
+
+    List<String> getPermissionsByUserId(Long userId);
 }
