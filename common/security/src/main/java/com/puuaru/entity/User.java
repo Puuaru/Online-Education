@@ -1,4 +1,4 @@
-package com.puuaru.acl.entity;
+package com.puuaru.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 

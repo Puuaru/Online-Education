@@ -1,6 +1,6 @@
 package com.puuaru.acl.mapper;
 
-import com.puuaru.acl.entity.User;
+import com.puuaru.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

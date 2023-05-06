@@ -1,6 +1,6 @@
 package com.puuaru.acl.service.impl;
 
-import com.puuaru.acl.entity.User;
+import com.puuaru.entity.User;
 import com.puuaru.acl.mapper.UserMapper;
 import com.puuaru.acl.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
