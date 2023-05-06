@@ -16,8 +16,8 @@
     <modules>
         <module>service</module>
         <module>common</module>
-        <module>infrastracture</module>
-        <!-- <module>common/common-utils</module> -->
+        <module>infrastructure</module>
+        <module>common/security</module>
     </modules>
     <packaging>pom</packaging>
 
