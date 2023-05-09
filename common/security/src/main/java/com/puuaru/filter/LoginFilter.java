@@ -7,8 +7,6 @@ import com.puuaru.utils.JwtUtils;
 import com.puuaru.utils.ResponseUtil;
 import com.puuaru.utils.ResultCommon;
 import lombok.SneakyThrows;
-import org.apache.tomcat.util.json.JSONParser;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,8 +53,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         // 获取认证后的用户信息
         SecurityUser user = (SecurityUser) authResult.getPrincipal();
-        String token = JwtUtils.generateJwt(user.getUser().getUsername(), user.getUser().getNickName());
-        redisTemplate.opsForValue().set(token, user.getPermissions());
+        String userId = user.getUser().getId().toString();
+        String token = JwtUtils.generateJwt(userId, user.getUser().getNickName());
+        redisTemplate.opsForValue().set(userId, user.getPermissions());
         ResponseUtil.out(response, ResultCommon.success().setData("token", token));
     }
 

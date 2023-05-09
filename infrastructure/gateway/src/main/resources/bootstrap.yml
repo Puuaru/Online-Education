@@ -54,3 +54,8 @@ spring:
             lb://service-vod
           predicates:
             - Path=/vod/**
+        - id: service-acl
+          uri:
+            lb://service-acl
+          predicates:
+            - Path=/acl/**
