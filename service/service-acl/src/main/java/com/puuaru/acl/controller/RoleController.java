@@ -5,6 +5,7 @@ import com.puuaru.acl.service.RolePermissionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class RoleController {
      */
     @PostMapping("/grant")
     @ApiOperation("为角色分配权限")
-    public void grantPermissionForRole(Long roleId, Long[] permissionIds) {
+    public void grantPermissionForRole(Long roleId, @RequestBody Long[] permissionIds) {
         rolePermissionService.grantPermissionForRole(roleId, permissionIds);
     }
 }

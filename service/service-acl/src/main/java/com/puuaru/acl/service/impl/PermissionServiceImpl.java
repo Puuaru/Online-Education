@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +41,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     private List<Permission> getPermissionChildren(List<Permission> permissions, Permission parent) {
         return permissions.stream()
-                .filter(item -> item.getPid() == parent.getId())
+                .filter(item -> Objects.equals(item.getPid(), parent.getId()))
                 .peek(item -> {
                     item.setLevel(parent.getLevel() + 1);
                     item.setChildren(getPermissionChildren(permissions, item));

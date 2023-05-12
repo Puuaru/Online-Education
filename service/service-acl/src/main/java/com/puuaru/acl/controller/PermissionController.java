@@ -58,7 +58,7 @@ public class PermissionController {
      */
     @PostMapping("/add")
     @ApiOperation("插入菜单或权限")
-    public Boolean savePermission(Permission permission) {
+    public Boolean savePermission(@RequestBody Permission permission) {
         return permissionService.save(permission);
     }
 
@@ -69,7 +69,7 @@ public class PermissionController {
      */
     @PutMapping("/update")
     @ApiOperation("更新菜单或权限")
-    public Boolean updatePermission(Permission permission) {
+    public Boolean updatePermission(@RequestBody Permission permission) {
         return permissionService.updateById(permission);
     }
 }
