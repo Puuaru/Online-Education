@@ -1,6 +1,7 @@
 package com.puuaru.servicebase.config;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -26,6 +27,7 @@ public class DateFormatConfig {
     /**
      * Date 类型设置全局时间格式化
      * <p>Note: dateFormat() 方法线程不安全</p>
+     *
      * @return
      */
     @Bean
@@ -46,13 +48,22 @@ public class DateFormatConfig {
         return new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(pattern));
     }
 
+    @Bean
+    public LocalDateTimeDeserializer localDateTimeDeserializer() {
+        return new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(pattern));
+    }
+
     /**
      * LocalDateTime 类型全局时间格式化
+     *
      * @param localDateTimeSerializer
      * @return
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(LocalDateTimeSerializer localDateTimeSerializer) {
-        return builder -> builder.serializerByType(LocalDateTime.class, localDateTimeSerializer);
+    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(LocalDateTimeSerializer localDateTimeSerializer, LocalDateTimeDeserializer localDateTimeDeserializer) {
+        return builder -> {
+            builder.serializerByType(LocalDateTime.class, localDateTimeSerializer);
+            builder.deserializerByType(LocalDateTime.class, localDateTimeDeserializer);
+        };
     }
 }
