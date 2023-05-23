@@ -2,6 +2,7 @@ package com.puuaru.acl.controller;
 
 
 import com.puuaru.acl.service.UserService;
+import com.puuaru.acl.vo.UserInfo;
 import com.puuaru.entity.User;
 import com.puuaru.utils.JwtUtils;
 import com.puuaru.utils.ResultCommon;
@@ -38,17 +39,14 @@ public class UserController {
     }
 
     /**
-     * 暂时替代实际的用户查找
+     * 临时方法
      * @return
      */
     @GetMapping("/info")
-    public ResultCommon info(HttpServletRequest request) {
-        String userId = JwtUtils.getMemberIdByJwt(request);
-        User user = userService.getById(userId);
-
-        return ResultCommon.success()
-                .setData("name", user.getNickName())
-                .setData("avatar", user.getAvatar());
+    public UserInfo getUserInfo() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername("AAAA123123");
+        return userInfo;
     }
 }
 

@@ -1,5 +1,7 @@
 package com.puuaru.utils;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,6 +18,7 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
+@ApiModel("通用返回")
 public class ResultCommon implements Serializable {
 
     @Serial

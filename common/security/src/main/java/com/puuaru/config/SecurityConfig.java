@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 配置无状态，否则会因cookie影响认证导致无token的情况下也有可能通过
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                // 放行 swagger
-                .authorizeRequests().antMatchers("/swagger-ui/**", "/v2/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                // 放行 swagger，并在编写测试阶段放行acl模块
+                .authorizeRequests().antMatchers("/swagger-ui/**", "/v2/**", "/swagger-resources/**", "/webjars/**", "/acl/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/acl/index/logout").addLogoutHandler(new TokenLogoutHandler(redisTemplate))
