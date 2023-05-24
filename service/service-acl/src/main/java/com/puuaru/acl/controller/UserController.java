@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/info")
-    public UserInfo getUserInfo() {
+    public UserInfo getUserInfo(@RequestParam String teslat) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("AAAA123123");
         return userInfo;

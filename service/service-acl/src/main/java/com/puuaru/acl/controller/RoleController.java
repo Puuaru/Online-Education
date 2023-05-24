@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -31,14 +32,32 @@ public class RoleController {
     }
 
     /**
+     * 根据角色Id查询角色拥有的权限
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/permissions/list/{roleId}")
+    @ApiOperation("根据角色Id查询角色拥有的权限")
+    public List<Permission> getPermissionsByRoleId(@PathVariable Long roleId) {
+        List<Permission> permissions = rolePermissionService.getPermissionsByRoleId(roleId);
+        return permissions;
+    }
+
+    /**
      * 为角色分配权限
      * @param roleId
      * @param permissionIds
      */
-    @PostMapping("/grant")
+    @PostMapping("/permissions/grant/{roleId}")
     @ApiOperation("为角色分配权限")
-    public void grantPermissionForRole(Long roleId, @RequestBody Long[] permissionIds) {
-        rolePermissionService.grantPermissionForRole(roleId, permissionIds);
+    public void grantPermissionsForRole(@PathVariable Long roleId, @RequestBody Long[] permissionIds) {
+        rolePermissionService.grantPermissionsForRole(roleId, permissionIds);
+    }
+
+    @PostMapping("/permissions/alter/{roleId}")
+    @ApiOperation("更改角色的权限")
+    public void alterPermissionsForRole(@PathVariable Long roleId, @RequestBody Set<Long> permissionIds) {
+        rolePermissionService.alterPermissionsForRole(roleId, permissionIds);
     }
 
     /**
@@ -95,17 +114,6 @@ public class RoleController {
     @ApiOperation("更新角色")
     public Boolean updateRoleById(@RequestBody Role role) {
         return false;
-    }
-
-    /**
-     * 根据角色Id查询角色拥有的权限
-     * @param roleId
-     * @return
-     */
-    @GetMapping("/permissons/{roleId}")
-    @ApiOperation("根据角色Id查询角色拥有的权限")
-    public List<Permission> getPermissionsByRoleId(@PathVariable Long roleId) {
-        return null;
     }
 
 }
