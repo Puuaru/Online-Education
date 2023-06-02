@@ -4,6 +4,7 @@ package com.puuaru.acl.controller;
 import com.puuaru.acl.entity.Permission;
 import com.puuaru.acl.entity.Role;
 import com.puuaru.acl.service.RolePermissionService;
+import com.puuaru.acl.service.RoleService;
 import com.puuaru.servicebase.vo.PageData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,12 @@ import java.util.Set;
 public class RoleController {
 
     private final RolePermissionService rolePermissionService;
+    private final RoleService roleService;
 
     @Autowired
-    public RoleController(RolePermissionService rolePermissionService) {
+    public RoleController(RolePermissionService rolePermissionService, RoleService roleService) {
         this.rolePermissionService = rolePermissionService;
+        this.roleService = roleService;
     }
 
     /**
@@ -67,7 +70,7 @@ public class RoleController {
     @GetMapping("/list")
     @ApiOperation("获取全部角色信息")
     public List<Role> listRoles() {
-        return null;
+        return roleService.list();
     }
 
     /**
@@ -80,7 +83,8 @@ public class RoleController {
     @GetMapping("/condition/{current}/{limit}")
     @ApiOperation("针对角色名字段进行查询，并根据提供的信息返回分页后的数据")
     public PageData<Role> getRolesWithQuery(@PathVariable Long current, @PathVariable Long limit, String nameQuery) {
-        return null;
+        PageData<Role> data = roleService.getRolesWithQuery(current, limit, nameQuery);
+        return data;
     }
 
     /**
@@ -91,7 +95,7 @@ public class RoleController {
     @DeleteMapping("/remove/{roleId}")
     @ApiOperation("按id删除角色")
     public Boolean removeRole(@PathVariable Long roleId) {
-        return false;
+        return roleService.removeById(roleId);
     }
 
     /**
@@ -102,7 +106,7 @@ public class RoleController {
     @PostMapping("/add")
     @ApiOperation("添加角色")
     public Boolean addRole(@RequestBody Role role) {
-        return false;
+        return roleService.save(role);
     }
 
     /**
@@ -113,7 +117,7 @@ public class RoleController {
     @PostMapping("/update")
     @ApiOperation("更新角色")
     public Boolean updateRoleById(@RequestBody Role role) {
-        return false;
+        return roleService.updateById(role);
     }
 
 }
