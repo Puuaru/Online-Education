@@ -8,6 +8,7 @@ import com.puuaru.acl.service.RoleService;
 import com.puuaru.servicebase.vo.PageData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,7 +83,7 @@ public class RoleController {
      */
     @GetMapping("/condition/{current}/{limit}")
     @ApiOperation("针对角色名字段进行查询，并根据提供的信息返回分页后的数据")
-    public PageData<Role> getRolesWithQuery(@PathVariable Long current, @PathVariable Long limit, String nameQuery) {
+    public PageData<Role> getRolesWithQuery(@PathVariable Long current, @PathVariable Long limit, @RequestParam(required = false) String nameQuery) {
         PageData<Role> data = roleService.getRolesWithQuery(current, limit, nameQuery);
         return data;
     }

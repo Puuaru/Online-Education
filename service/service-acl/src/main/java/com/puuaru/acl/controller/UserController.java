@@ -44,7 +44,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/info")
-    public UserInfo getUserInfo(@RequestParam String teslat) {
+    public UserInfo getUserInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("AAAA123123");
         return userInfo;

@@ -17,6 +17,7 @@ public class ResponseUtil {
     public static void out(HttpServletResponse response, ResultCommon result) {
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
         JSON.writeJSONString(response.getWriter(), result);
     }
 }

@@ -62,6 +62,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtil.out(response, ResultCommon.fail());
+        ResponseUtil.out(response, ResultCommon.fail().setMessage("登录失败，请检查你的帐号密码是否正确"));
     }
 }
