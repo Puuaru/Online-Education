@@ -7,6 +7,8 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+import java.time.Duration;
+
 /**
  * @Description: CorsConfig
  * @Author: puuaru
@@ -21,6 +23,7 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.setMaxAge(Duration.ofHours(2));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
         source.registerCorsConfiguration("/**", corsConfiguration);
         CorsWebFilter corsWebFilter = new CorsWebFilter(source);
