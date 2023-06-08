@@ -6,7 +6,7 @@
         select p.*
         from acl_role_permission rp
                  left join acl_permission p on rp.permission_id = p.id
-        where rp.role_id = 1388889175722668034
+        where rp.role_id = #{roleId}
             and p.is_deleted = 0
     </select>
 </mapper>

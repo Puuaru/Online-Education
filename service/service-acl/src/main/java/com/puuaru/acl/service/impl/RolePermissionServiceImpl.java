@@ -75,6 +75,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
                     .map(permissionId -> new RolePermission(roleId, permissionId))
                     .collect(Collectors.toList());
             super.saveBatch(permissions);
+            return;
         }
 
         // 滤出删除的权限，既保留oldPermissionIds中存在而updatedPermissionIds中不存在的
