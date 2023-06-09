@@ -30,27 +30,28 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
     @Override
     public Mono<AuthorizationDecision> check(Mono authentication, AuthorizationContext context) {
         String jwt = context.getExchange().getRequest().getHeaders().getFirst("token");
-        System.out.println("==========" + jwt + "==========");
+        String token = getMemberIdByJwt(jwt);
+        System.out.println("==========" + token + "==========");
         return authentication.just(new AuthorizationDecision(true));
     }
-    //
-    //public static String getMemberIdByJwt(String jwt) throws Exception {
-    //    if (ObjectUtils.isEmpty(jwt)) {
-    //        return "";
-    //    }
-    //    Claims body = parseJwt(jwt);
-    //    return (String) body.get("id");
-    //}
-    //public static SecretKey generalKey() {
-    //    byte[] encodedKey = Base64.getDecoder().decode(APP_KEY);
-    //    SecretKeySpec key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
-    //    return key;
-    //}
-    //public static Claims parseJwt(String jwt) throws Exception {
-    //    SecretKey secretKey = generalKey();
-    //    return Jwts.parser()
-    //            .setSigningKey(secretKey)
-    //            .parseClaimsJws(jwt)
-    //            .getBody();
-    //}
+
+    public static String getMemberIdByJwt(String jwt) throws Exception {
+        if (ObjectUtils.isEmpty(jwt)) {
+            return "";
+        }
+        Claims body = parseJwt(jwt);
+        return (String) body.get("id");
+    }
+    public static SecretKey generalKey() {
+        byte[] encodedKey = Base64.getDecoder().decode(APP_KEY);
+        SecretKeySpec key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
+        return key;
+    }
+    public static Claims parseJwt(String jwt) throws Exception {
+        SecretKey secretKey = generalKey();
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(jwt)
+                .getBody();
+    }
 }
