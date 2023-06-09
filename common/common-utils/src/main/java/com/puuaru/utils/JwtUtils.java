@@ -111,4 +111,12 @@ public class JwtUtils {
         Claims body = parseJwt(jwt);
         return (String) body.get("id");
     }
+
+    public static String getMemberIdByJwt(String jwt) throws Exception {
+        if (ObjectUtils.isEmpty(jwt)) {
+            return "";
+        }
+        Claims body = parseJwt(jwt);
+        return (String) body.get("id");
+    }
 }
